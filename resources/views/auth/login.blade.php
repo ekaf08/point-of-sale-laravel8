@@ -12,13 +12,20 @@
           <!-- /.login-logo -->
   
       <form action="{{ route('login') }}" method="post">
-        <div class="form-group has-feedback">
-          <input type="email" class="form-control" placeholder="Email">
+        @csrf
+        <div class="form-group has-feedback @error('email') has-eror @enderror">
+          <input type="email" name="email" class="form-control" placeholder="Email" required value="{{ old('email') }}">
           <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          @error('email')
+            <span class="help-block" style="color: red;">{{ $message }}</span>
+          @enderror
         </div>
-        <div class="form-group has-feedback">
-          <input type="password" class="form-control" placeholder="Password">
+        <div class="form-group has-feedback @error('password') has-eror @enderror">
+          <input type="password" name="password" class="form-control" placeholder="Password" required>
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          @error('password')
+            <span class="help-block" style="color: red;">{{ $message }}</span>
+          @enderror
         </div>
         <div class="row">
           <div class="col-xs-8">
