@@ -19,6 +19,21 @@ class KategoriController extends Controller
 
     public function data()
     {
+        $kategori = Kategori::orderBy('id', 'desc')->get();
+
+        return datatables()
+            ->of($kategori)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($kategori) {
+                return '
+                <div class="btn-group">
+                    <button onclick="editForm(`' . route('kategori.update', $kategori->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button onclick="deleteData(`' . route('kategori.destroy', $kategori->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i></button>
+                </div>
+                ';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
     /**
@@ -39,10 +54,10 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+
 
         $kategori = new Kategori();
-        $kategori->nama_kategori = $request->nama_kategori;
+        $kategori->nama = $request->nama_kategori;
         $kategori->save();
 
         return response()->json('Data Berhasil Disimpan', 200);
@@ -56,7 +71,8 @@ class KategoriController extends Controller
      */
     public function show($id)
     {
-        //
+        $kategori = Kategori::find($id);
+        return response()->json($kategori);
     }
 
     /**
@@ -79,7 +95,11 @@ class KategoriController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $kategori = Kategori::find($id);
+        $kategori->nama = $request->nama_kategori;
+        $kategori->update();
+
+        return response()->json('Data Berhasil Di Perbarui', 200);
     }
 
     /**
@@ -90,6 +110,9 @@ class KategoriController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kategori = Kategori::find($id);
+        $kategori->delete();
+
+        return response(null, 204);
     }
 }

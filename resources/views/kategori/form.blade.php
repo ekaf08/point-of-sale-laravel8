@@ -20,7 +20,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary btn-sm btn-flat">Simpan</button>
-                    <button type="button" class="btn btn-default btn-sm btn-flat" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-danger btn-sm btn-flat" data-dismiss="modal">Batal</button>
                 </div>
               </div>
         </form>
