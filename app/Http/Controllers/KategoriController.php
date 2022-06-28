@@ -54,7 +54,9 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-
+        $this->validate($request, [
+            'nama' => 'required|string|max:255|unique:kategori'
+        ]);
 
         $kategori = new Kategori();
         $kategori->nama = $request->nama_kategori;
