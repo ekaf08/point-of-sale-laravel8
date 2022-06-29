@@ -14,7 +14,26 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
+        return view('produk.index');
+    }
+
+    public function data()
+    {
+        $produk = Produk::orderBy('id', 'desc')->get();
+
+        return datatables()
+            ->of($produk)
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($produk) {
+                return '
+                <div class="btn-group">
+                    <button onclick="editForm(`' . route('produk.update', $produk->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button onclick="deleteData(`' . route('produk.destroy', $produk->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i></button>
+                </div>
+                ';
+            })
+            ->rawColumns(['aksi'])
+            ->make(true);
     }
 
     /**

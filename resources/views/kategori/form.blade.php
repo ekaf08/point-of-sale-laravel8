@@ -15,12 +15,11 @@
                         <div class="col-md-6">
                             <input type="text" name="nama_kategori" id="nama_kategori" class="form-control" required autofocus><span class="help-block with-errors"></span>
                         </div>
-                        
                     </div> 
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary btn-sm btn-flat">Simpan</button>
-                    <button type="button" class="btn btn-danger btn-sm btn-flat" data-dismiss="modal">Batal</button>
+                  <button class="btn btn-sm btn-flat btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                  <button type="button" class="btn btn-sm btn-flat btn-warning" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> Batal</button>
                 </div>
               </div>
         </form>
