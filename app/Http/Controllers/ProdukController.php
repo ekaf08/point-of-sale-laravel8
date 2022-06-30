@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Produk;
+use App\Models\Kategori;
 
 class ProdukController extends Controller
 {
@@ -14,25 +15,44 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        return view('produk.index');
+        $kategori = Kategori::all()->pluck('nama', 'id');
+        return view('produk.index', compact('kategori'));
     }
 
     public function data()
     {
-        $produk = Produk::orderBy('id', 'desc')->get();
+        $produk = Produk::leftJoin('kategori', 'kategori.id', 'produk.id_kategori')
+            ->select('produk.*', 'kategori.nama')
+            ->orderBy('kode_produk', 'asc')
+            ->get();
 
         return datatables()
             ->of($produk)
             ->addIndexColumn()
+            ->addColumn('kategori', function ($produk) {
+                return $produk->nama_kategori;
+            })
+            ->addColumn('kode_produk', function ($produk) {
+                return '<span class="label label-success">' . $produk->kode_produk . '</span>';
+            })
+            ->addColumn('harga_beli', function ($produk) {
+                return format_uang($produk->harga_beli);
+            })
+            ->addColumn('harga_jual', function ($produk) {
+                return format_uang($produk->harga_jual);
+            })
+            ->addColumn('stok', function ($produk) {
+                return format_uang($produk->stok);
+            })
             ->addColumn('aksi', function ($produk) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('produk.update', $produk->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i></button>
-                    <button onclick="deleteData(`' . route('produk.destroy', $produk->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i></button>
+                    <button onclick="editForm(`' . route('produk.update', $produk->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil" ></i> </button>
+                    <button onclick="deleteData(`' . route('produk.destroy', $produk->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> </button>
                 </div>
                 ';
             })
-            ->rawColumns(['aksi'])
+            ->rawColumns(['aksi', 'kode_produk'])
             ->make(true);
     }
 
@@ -54,12 +74,19 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'nama_produk' => 'required|string|max:255',
-            'harga_beli' => 'required|integer',
-            'harga_jual' => 'required|integer',
-            'stok' => 'required|integer',
-        ]);
+        // $this->validate($request, [
+        //     'nama_produk' => 'required|string|max:255',
+        //     'harga_beli' => 'required|integer',
+        //     'harga_jual' => 'required|integer',
+        //     'stok' => 'required|integer',
+        // ]);
+
+        $produk = Produk::latest()->first() ?? new Produk();
+        $request['kode_produk'] = 'P' . tambah_nol_di_depan($produk->id + 1, 6);
+
+        $produk = Produk::create($request->all());
+
+        return response()->json('Data Berhasil Disimpan', 200);
     }
 
     /**
@@ -70,7 +97,8 @@ class ProdukController extends Controller
      */
     public function show($id)
     {
-        //
+        $produk = Produk::find($id);
+        return response()->json($produk);
     }
 
     /**
@@ -93,7 +121,10 @@ class ProdukController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $produk = Produk::find($id);
+        $produk->update($request->all());
+
+        return response()->json('Data Berhasil Di Perbarui', 200);
     }
 
     /**

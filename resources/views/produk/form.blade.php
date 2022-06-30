@@ -1,6 +1,6 @@
   <!-- Modal -->
   <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <form action="" method="POST" class="form-horizontal">
             @csrf
             @method('post')
@@ -20,7 +20,13 @@
                     <div class="form-group row">
                         <label for="id_kategori"class="col-md-2 col-md-offset-1 control-label" >Kategori</label>
                         <div class="col-md-6">
-                            <input type="text" name="id_kategori" id="id_kategori" class="form-control" required autofocus><span class="help-block with-errors"></span>
+                            <select name="id_kategori" class="form-control" id="id_kategori" required>
+                            <option value="">Pilih Kategori</option>
+                            @foreach ($kategori as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
+                            @endforeach
+                            </select>
+                            <span class="help-block with-errors"></span>
                         </div>
                     </div> 
 
@@ -62,8 +68,10 @@
 
                 </div>
                 <div class="modal-footer">
+                    <div class="col-md-9">
                   <button class="btn btn-sm btn-flat btn-primary"><i class="fa fa-save"></i> Simpan</button>
                   <button type="button" class="btn btn-sm btn-flat btn-warning" data-dismiss="modal"><i class="fa fa-arrow-circle-left"></i> Batal</button>
+                </div>
                 </div>
               </div>
         </form>

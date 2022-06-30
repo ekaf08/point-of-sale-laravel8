@@ -52,9 +52,9 @@
             },
             columns: [
                 {data: 'DT_RowIndex', searchable: false, sortable:false},
-                {data: 'id'},
+                {data: 'kode_produk'},
                 {data: 'nama_produk'},
-                {data: ''},
+                {data: 'nama'},
                 {data: 'merk'},
                 {data: 'harga_beli'},
                 {data: 'harga_jual'},
@@ -68,7 +68,7 @@
             if (! e.preventDefault()){
                 $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
                     .done((response) => {
-                        $('modal-form').modal('hide');
+                        $('#modal-form').modal('hide');
                         table.ajax.reload();
                     })
                     .fail((errors) => {
@@ -86,7 +86,7 @@
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
-        $('#modal-form [name=nama_kategori]').focus();
+        $('#modal-form [name=nama_produk]').focus();
     }
 
     function editForm(url) {
@@ -96,11 +96,18 @@
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
-        $('#modal-form [name=nama_kategori]').focus();
+        $('#modal-form [name=nama_produk]').focus();
 
         $.get(url)
             .done((response) => {
-                $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
+                $('#modal-form [name=nama_produk]').val(response.nama_produk);
+                $('#modal-form [name=id_kategori]').val(response.id_kategori);
+                $('#modal-form [name=merk]').val(response.merk);
+                $('#modal-form [name=harga_beli]').val(response.harga_beli);
+                $('#modal-form [name=harga_jual]').val(response.harga_jual);
+                $('#modal-form [name=diskon]').val(response.diskon);
+                $('#modal-form [name=stok]').val(response.stok);
+
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');
