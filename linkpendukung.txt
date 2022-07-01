@@ -1,0 +1,5 @@
+Laravel DomPDF
+https://github.com/barryvdh/laravel-dompdf
+
+Milon/Barcode
+https://github.com/milon/barcode

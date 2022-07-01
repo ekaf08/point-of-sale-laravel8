@@ -152,4 +152,10 @@ class ProdukController extends Controller
         }
         return response(null, 204);
     }
+
+    public function cetakBarcode(Request $request)
+    {
+        dd($request->all());
+        return $request;
+    }
 }
