@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use App\Models\Kategori;
+use PDF;
 
 class ProdukController extends Controller
 {
@@ -155,7 +156,16 @@ class ProdukController extends Controller
 
     public function cetakBarcode(Request $request)
     {
-        dd($request->all());
-        return $request;
+        $dataProduk = array();
+        foreach ($request->id as $id) {
+            $produk = Produk::find($id);
+            $dataProduk[] = $produk;
+        }
+
+        $pdf = PDF::loadView('produk.barcode', compact('dataProduk'));
+        $pdf->setpaper('a4', 'potrait');
+        return $pdf->stream('produk.pdf');
+
+        // dd($request->all());
     }
 }
