@@ -86,7 +86,7 @@ class ProdukController extends Controller
         // ]);
 
         $produk = Produk::latest()->first() ?? new Produk();
-        $request['kode_produk'] = 'P' . tambah_nol_di_depan($produk->id + 1, 6);
+        $request['kode_produk'] = 'P' . tambah_nol_di_depan((int)$produk->id + 1, 6);
 
         $produk = Produk::create($request->all());
 
@@ -161,9 +161,9 @@ class ProdukController extends Controller
             $produk = Produk::find($id);
             $dataProduk[] = $produk;
         }
-
-        $pdf = PDF::loadView('produk.barcode', compact('dataProduk'));
-        $pdf->setpaper('a4', 'potrait');
+        $no = 1;
+        $pdf = PDF::loadView('produk.barcode', compact('dataProduk', 'no'));
+        $pdf->setPaper('a4', 'potrait');
         return $pdf->stream('produk.pdf');
 
         // dd($request->all());
