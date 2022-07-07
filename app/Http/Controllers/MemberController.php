@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use PDF;
 
 class MemberController extends Controller
 {
@@ -24,6 +25,9 @@ class MemberController extends Controller
         return datatables()
             ->of($member)
             ->addIndexColumn()
+            ->addColumn('select_all', function ($member) {
+                return '<input type="checkbox" name="id[]" value"" ' . $member->id . '>';
+            })
             ->addColumn('kode_member', function ($member) {
                 return '<span class="label label-success">' . $member->kode_member . '</span>';
             })
@@ -35,7 +39,7 @@ class MemberController extends Controller
                 </div>
                 ';
             })
-            ->rawColumns(['aksi', 'kode_member'])
+            ->rawColumns(['aksi', 'kode_member', 'select_all'])
             ->make(true);
     }
 
@@ -57,13 +61,13 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        $member = Member::latest()->first();
-        $kode_member = (int) $member->kode_member + 1 ?? 1;
+        $member = Member::latest()->first() ?? new Member();
+        $kode_member = $member->kode_member + 1;
 
         // dd($kode_member);
 
         $member = new Member();
-        $member->kode_member = tambah_nol_di_depan($kode_member, 4);
+        $member->kode_member = tambah_nol_di_depan($kode_member, 5);
         $member->nama = $request->nama;
         $member->telepon = $request->telepon;
         $member->alamat = $request->alamat;
@@ -120,5 +124,18 @@ class MemberController extends Controller
         $member->delete();
 
         return response(null, 204);
+    }
+
+    public function cetakMember(Request $request)
+    {
+        $dataMember = array();
+        foreach ($request->id as $id) {
+            $member = Member::find($id);
+            $dataMember[] = $member;
+        }
+        $no = '1';
+        $pdf = PDF::loadView('member.cetak', compact('dataMember', 'no'));
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('member.pdf');
     }
 }
