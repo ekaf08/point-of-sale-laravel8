@@ -11,11 +11,23 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="nama_kategori"class="col-md-2 col-md-offset-1 control-label" >Kategori</label>
+                        <label for="nama"class="col-md-2 col-md-offset-1 control-label" >Nama</label>
                         <div class="col-md-6">
-                            <input type="text" name="nama_kategori" id="nama_kategori" class="form-control" required autofocus><span class="help-block with-errors"></span>
+                            <input type="text" name="nama" id="nama" class="form-control" required autofocus><span class="help-block with-errors"></span>
                         </div>
                     </div> 
+                    <div class="form-group row">
+                      <label for="telepon"class="col-md-2 col-md-offset-1 control-label" >Telepon</label>
+                      <div class="col-md-6">
+                          <input type="text" name="telepon" id="telepon" class="form-control" required><span class="help-block with-errors"></span>
+                      </div>
+                  </div> 
+                  <div class="form-group row">
+                    <label for="alamat"class="col-md-2 col-md-offset-1 control-label" >Alamat</label>
+                    <div class="col-md-6">
+                        <textarea name="alamat" id="alamat" rows="3" class="form-control"></textarea>
+                    </div>
+                </div> 
                 </div>
                 <div class="modal-footer">
                   <button class="btn btn-sm btn-flat btn-primary"><i class="fa fa-save"></i> Simpan</button>

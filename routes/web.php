@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     ProdukController,
     KategoriController,
+    MemberController,
 };
-use App\Http\Controllers\MemberController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

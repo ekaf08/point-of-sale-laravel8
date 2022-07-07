@@ -19,11 +19,14 @@ class MemberController extends Controller
 
     public function data()
     {
-        $member = Member::orderBy('id', 'desc')->get();
+        $member = Member::orderBy('kode_member', 'asc')->get();
 
         return datatables()
             ->of($member)
             ->addIndexColumn()
+            ->addColumn('kode_member', function ($member) {
+                return '<span class="label label-success">' . $member->kode_member . '</span>';
+            })
             ->addColumn('aksi', function ($member) {
                 return '
                 <div class="btn-group">
@@ -32,7 +35,7 @@ class MemberController extends Controller
                 </div>
                 ';
             })
-            ->rawColumns(['aksi'])
+            ->rawColumns(['aksi', 'kode_member'])
             ->make(true);
     }
 
@@ -54,10 +57,17 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
-        $member = new Member();
-        $member->kode_member = $request->kode_member;
-        $member->save();
+        $member = Member::latest()->first();
+        $kode_member = (int) $member->kode_member + 1 ?? 1;
 
+        // dd($kode_member);
+
+        $member = new Member();
+        $member->kode_member = tambah_nol_di_depan($kode_member, 4);
+        $member->nama = $request->nama;
+        $member->telepon = $request->telepon;
+        $member->alamat = $request->alamat;
+        $member->save();
         return response()->json('Data Berhasil Disimpan', 200);
     }
 
@@ -93,9 +103,7 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $member = Member::find($id);
-        $member->kode_member = $request->kode_member;
-        $member->update();
+        $member = Member::find($id)->update($request->all());
 
         return response()->json('Data Berhasil Di perbarui', 200);
     }

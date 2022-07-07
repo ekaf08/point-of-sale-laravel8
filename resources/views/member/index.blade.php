@@ -15,14 +15,21 @@
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
-              <button onclick="addForm('{{ route('kategori.store') }}')" class="btn btn-success btn-xs btn-flat m"><i class="fa fa-plus-circle"> </i> Tambah Data</button>
+              <button onclick="addForm('{{ route('member.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> </i> Tambah Data</button>
+              <button onclick="cetakMember('{{ route('member.cetak') }}')" class="btn btn-info btn-xs btn-flat "><i class="fa fa-print"> Cetak Member</i></button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
               <table class="table table-striped table-bordered">
                 <thead>
+                  <th>
+                    <input type="checkbox" name="select_all" id="select_all">
+                  </th>
                   <th width="15%">No</th>
-                  <th>Member</th>
+                  <th>Kode Member</th>
+                  <th>Nama</th>
+                  <th>Telepon</th>
+                  <th>Alamat</th>
                   <th width="10%"><i class="fa fa-cog"></i></th>
                 </thead>
               </table>
@@ -30,7 +37,7 @@
           </div>
         </div>
       </div>
-      @include('kategori.form')    
+      @include('member.form')    
 @endsection
 
 @push('scripts')
@@ -42,11 +49,14 @@
           processing: true,
           autoWidth: false,
           ajax:{
-            url: '{{ route('kategori.data') }}',
+            url: '{{ route('member.data') }}',
           },
           columns:[
             {data: 'DT_RowIndex', searchable:false, sortable:false},
+            {data: 'kode_member'},
             {data: 'nama'},
+            {data: 'telepon'},
+            {data: 'alamat'},
             {data: 'aksi', searchable:false, sortable:false}
           ]
         });
@@ -68,26 +78,28 @@
 
       function addForm(url){
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Tambah Kategori');
+        $('#modal-form .modal-title').text('Tambah Member');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
-        $('#modal-form [name=nama_kategori]').focus();
+        $('#modal-form [name=nama]').focus();
       }
 
       function editForm(url) {
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Edit Kategori');
+        $('#modal-form .modal-title').text('Edit Member');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
-        $('#modal-form [name=nama_kategori]').focus();
+        $('#modal-form [name=nama]').focus();
 
         $.get(url)
           .done((response) => {
-            $('#modal-form [name=nama_kategori]').val(response.nama);
+            $('#modal-form [name=nama]').val(response.nama);
+            $('#modal-form [name=telepon]').val(response.telepon);
+            $('#modal-form [name=alamat]').val(response.alamat);
           })
           .fail((errors) => {
             alert('Tidak dapat menampilkan data');
