@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with border">
-                    <div class="btn-group">
+                    <div class="">
                         <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Tambah Produk</i></button>
                         <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"> Hapus Produk</i></button>
                         <button onclick="cetakBarcode('{{ route('produk.cetak_barcode') }}')" class="btn btn-info btn-xs btn-flat"><i class="fa fa-barcode"> Cetak Barcode</i></button>
@@ -120,6 +120,7 @@
                 $('#modal-form [name=harga_jual]').val(response.harga_jual);
                 $('#modal-form [name=diskon]').val(response.diskon);
                 $('#modal-form [name=stok]').val(response.stok);
+                
 
             })
             .fail((errors) => {

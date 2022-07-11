@@ -34,8 +34,8 @@ class MemberController extends Controller
             ->addColumn('aksi', function ($member) {
                 return '
                 <div class="btn-group">
-                    <button onclick="editForm(`' . route('member.update', $member->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i></button>
-                    <button onclick="deleteData(`' . route('member.destroy', $member->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i></button>
+                    <button type="button" onclick="editForm(`' . route('member.update', $member->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button type="button" onclick="deleteData(`' . route('member.destroy', $member->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i></button>
                 </div>
                 ';
             })
@@ -67,7 +67,7 @@ class MemberController extends Controller
         // dd($kode_member);
 
         $member = new Member();
-        $member->kode_member = tambah_nol_di_depan($kode_member, 5);
+        $member->kode_member = 'MPOS-' . tambah_nol_di_depan($kode_member, 3);
         $member->nama = $request->nama;
         $member->telepon = $request->telepon;
         $member->alamat = $request->alamat;
