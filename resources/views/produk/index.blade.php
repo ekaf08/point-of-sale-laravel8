@@ -132,7 +132,7 @@
     function deleteData(url) {
         if (confirm('Yakin menghapus data ini ?')){
             $.post(url, {
-                '_token': $('name=scrf-token').attr('content'),
+                '_token': $('[name=csrf-token]').attr('content'),
                 '_method': 'delete'
             })
             .done((response) => {
@@ -144,6 +144,7 @@
             });
         }
     }
+
 
     function deleteSelected(url){
         if ($('input:checked').length > 1) {
