@@ -43,6 +43,7 @@
       @include('member.form')    
 @endsection
 
+
 @push('scripts')
     <script>
       

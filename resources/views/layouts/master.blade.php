@@ -270,6 +270,29 @@
 </div>
 <!-- ./wrapper -->
 
+<script type="text/javascript" language="javascript">
+  function hurufkapital() {
+       var x = document.getElementById("nama");
+       x.value = x.value.toUpperCase();
+
+       var almt = document.getElementById("alamat");
+       almt.value = almt.value.toUpperCase();
+     }
+
+     function kapital(){
+      var merk = document.getElementById("merk");
+      merk.value = merk.value.toUpperCase();
+      var np = document.getElementById("nama_produk");
+      np.value = np.value.toUpperCase();
+    }
+
+    function kapital1(){
+      var nk = document.getElementById("nama_kategori");
+      nk.value = nk.value.toUpperCase();
+    }
+</script>
+
+
 <!-- jQuery 3 -->
 <script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -319,28 +342,7 @@
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="{{ asset('AdminLTE-2/dist/js/demo.js') }}"></script> --}}
 
-<script type="text/javascript" language="javascript">
-   function hurufkapital() {
-        var x = document.getElementById("nama");
-        x.value = x.value.toUpperCase();
 
-        var almt = document.getElementById("alamat");
-        almt.value = almt.value.toUpperCase();
-
-       
-
-        var nk = document.getElementById("nama_kategori");
-        nk.value = nk.value.toUpperCase();
-      }
-
-      function kapital{
-        var merk = document.getElementById("merk");
-        merk.value = merk.value.toUpperCase();
-
-        var np = document.getElementById("nama_produk");
-        np.value = np.value.toUpperCase();
-      }
-</script>
 
  @stack('scripts')
 </body>

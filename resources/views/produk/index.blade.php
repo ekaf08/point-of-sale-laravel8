@@ -47,6 +47,7 @@
     @includeIf('produk.form')
 @endsection
 
+
 @push('scripts')
 <script>
     let table;
