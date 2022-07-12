@@ -25,15 +25,12 @@ class SupplierController extends Controller
         return datatables()
             ->of($supplier)
             ->addIndexColumn()
-            ->addIndexColumn('select_all', function ($supplier) {
-                return '<input type="checkbox" name="id[]" value="' . $supplier->id . '">';
-            })
             ->addColumn('aksi', function ($supplier) {
-                return ' 
-                    <div class="">
-                        <button onclick="editForm(`' . route('supplier.update', $supplier->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i></button>
-                        <button onclick="editForm(`' . route('supplier.update', $supplier->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i></button>
-                    </div>
+                return '
+                <div class="btn-group">
+                    <button type="button" onclick="editForm(`' . route('supplier.update', $supplier->id) . '`)" class="btn btn-xs btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                    <button type="button" onclick="deleteData(`' . route('supplier.destroy', $supplier->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                </div>
                 ';
             })
             ->rawColumns(['aksi'])

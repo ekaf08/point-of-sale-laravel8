@@ -13,19 +13,19 @@
                     <div class="form-group row">
                         <label for="nama_supplier"class="col-md-2 col-md-offset-1 control-label" >Nama</label>
                         <div class="col-md-6">
-                            <input type="text" name="nama_supplier" id="nama_supplier" class="form-control" required autofocus><span class="help-block with-errors"></span>
+                            <input type="text" name="nama_supplier" id="nama_supplier" onkeyup="upsupplier()" class="form-control" required autofocus><span class="help-block with-errors"></span>
                         </div>
                     </div> 
                     <div class="form-group row">
                       <label for="telepon"class="col-md-2 col-md-offset-1 control-label" >Telepon</label>
                       <div class="col-md-6">
-                          <input type="text" name="telepon" id="telepon" class="form-control" required autofocus><span class="help-block with-errors"></span>
+                          <input type="text" name="telepon" id="telepon" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control" required autofocus><span class="help-block with-errors"></span>
                       </div>
                   </div>
                   <div class="form-group row">
                     <label for="alamat"class="col-md-2 col-md-offset-1 control-label" >Alamat</label>
                     <div class="col-md-6">
-                      <textarea name="alamat" id="alamat" rows="3" class="form-control"></textarea>
+                      <textarea name="alamat" id="alamat" onkeyup="upsupplier()" rows="3" class="form-control"></textarea>
                     </div>
                 </div>
                 </div>
