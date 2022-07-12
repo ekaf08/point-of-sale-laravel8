@@ -9,7 +9,7 @@
 <body>
     <section style="border: 1px solid #fff">
         <table width="100%">
-            @foreach ($dataMember as $key => $data)
+            @foreach ($datamember as $key => $data)
                 <tr>
                     @foreach ($data as $item)
                         <td class="text-center" with="50%">

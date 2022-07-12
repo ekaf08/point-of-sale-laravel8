@@ -132,16 +132,18 @@
       }
 
       function cetakMember(url){
-        if ($('input:checked').length < 1){
+        if ($('input:checked').length < 1) {
           alert ('Pilih Member yang akan di cetak');
           return;
         } else {
           $('.form-member')
-          .attr('action', url)
           .attr('target', '_blank')
+          .attr('action', url)
             .submit();
         }
       }
+
+    
     
     </script>
 @endpush
