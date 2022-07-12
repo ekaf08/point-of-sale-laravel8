@@ -12,10 +12,10 @@
 @section('content')
       <!-- Main row -->
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
           <div class="box">
             <div class="box-header with-border">
-              <button onclick="addForm('{{ route('kategori.store') }}')" class="btn btn-success btn-xs btn-flat m"><i class="fa fa-plus-circle"> </i> Tambah Data</button>
+              <button onclick="addForm('{{ route('kategori.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> </i> Tambah Data</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -25,6 +25,9 @@
                   <th>Kategori</th>
                   <th width="10%"><i class="fa fa-cog"></i></th>
                 </thead>
+                <tbody style="font-weight: normal;">
+
+                </tbody>
               </table>
             </div>            
           </div>

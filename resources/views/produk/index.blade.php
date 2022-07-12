@@ -11,9 +11,9 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="box">
-                <div class="box-header with border">
+                <div class="box-header with-border">
                     <div class="">
                         <button onclick="addForm('{{ route('produk.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> Tambah Produk</i></button>
                         <button onclick="deleteSelected('{{ route('produk.delete_selected') }}')" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"> Hapus Produk</i></button>
@@ -24,19 +24,22 @@
                     <form action="" method="post" class="form-produk">
                         @csrf
                         <table class="table table-striped table-bordered">
-                            <thead>
-                                <th><input type="checkbox" name="select_all" id="select_all"></th>
-                                <th width="5%">No</th>
-                                <th>Kode</th>
-                                <th>Nama</th>
-                                <th>Kategori</th>
-                                <th>Merk</th>
-                                <th>Harga Beli</th>
-                                <th>Harga Jual</th>
-                                <th>Diskon</th>
-                                <th>Stok</th>
-                                <th width="15%"><i class="fa fa-cog"></i></th>
+                            <thead style="background-color: #dd4b39; color: white;">
+                                <th width="3%"><input type="checkbox" name="select_all" id="select_all"></th>
+                                <th width="3%">No</th>
+                                <th width="5%">Kode</th>
+                                <th width="25%">Nama</th>
+                                <th width="10%">Kategori</th>
+                                <th width="8%">Merk</th>
+                                <th width="13%">Harga Beli</th>
+                                <th width="13%">Harga Jual</th>
+                                <th width="5">Diskon</th>
+                                <th width="5%">Stok</th>
+                                <th width="10%"><i class="fa fa-cog"></i></th>
                             </thead>
+                            <tbody style="font-weight: normal;">
+
+                            </tbody>
                         </table>
                     </form>
                 </div>

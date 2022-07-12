@@ -25,6 +25,9 @@
                         <th>Alamat</th>
                         <th width="15%"><i class="fa fa-cog"></i></th>
                     </thead>
+                    <tbody style="font-weight: normal;">
+
+                    </tbody>
                 </table>
             </div>
         </div>
