@@ -45,6 +45,7 @@
 
 @push('scripts')
     <script>
+      
       let table;
 
       $(function (){

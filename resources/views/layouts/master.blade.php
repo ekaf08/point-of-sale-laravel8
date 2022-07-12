@@ -319,6 +319,29 @@
 <!-- AdminLTE for demo purposes -->
 {{-- <script src="{{ asset('AdminLTE-2/dist/js/demo.js') }}"></script> --}}
 
+<script type="text/javascript" language="javascript">
+   function hurufkapital() {
+        var x = document.getElementById("nama");
+        x.value = x.value.toUpperCase();
+
+        var almt = document.getElementById("alamat");
+        almt.value = almt.value.toUpperCase();
+
+       
+
+        var nk = document.getElementById("nama_kategori");
+        nk.value = nk.value.toUpperCase();
+      }
+
+      function kapital{
+        var merk = document.getElementById("merk");
+        merk.value = merk.value.toUpperCase();
+
+        var np = document.getElementById("nama_produk");
+        np.value = np.value.toUpperCase();
+      }
+</script>
+
  @stack('scripts')
 </body>
 </html>

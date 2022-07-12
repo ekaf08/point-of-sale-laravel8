@@ -19,16 +19,22 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <th width="5%">No</th>
-                  <th>Nama</th>
-                  <th>Telepon</th>
-                  <th>Alamat</th>
-                  <th width="10%"><i class="fa fa-cog"></i></th>
-                </thead>
-              </table>
-            </div>            
+              <form action="" method="post" class="form-supplier">
+                @csrf
+                <table class="table table-striped table-bordered">
+                  <thead>
+                    <th width="5%">
+                      <input type="checkbox" name="select_all" id="select_all">
+                    </th>
+                    <th width="5%">No</th>
+                    <th>Nama</th>
+                    <th>Telepon</th>
+                    <th>Alamat</th>
+                    <th width="10%"><i class="fa fa-cog"></i></th>
+                  </thead>
+                </table>
+            </form>            
+            </div>
           </div>
         </div>
       </div>
@@ -47,12 +53,17 @@
             url: '{{ route('supplier.data') }}',
           },
           columns:[
+            {data: 'select_all', searchable:false, sortable:false},
             {data: 'DT_RowIndex', searchable:false, sortable:false},
             {data: 'nama'},
             {data: 'telepon'},
             {data: 'alamat'},
             {data: 'aksi', searchable:false, sortable:false}
           ]
+
+          $('[name=select_all]').on('click', function(){
+            $(':checkbox').prop('checked', this.checked);
+          });
         });
 
         $('#modal-form').validator().on('submit', function (e) {

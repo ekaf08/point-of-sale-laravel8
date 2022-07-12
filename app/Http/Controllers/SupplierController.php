@@ -25,6 +25,9 @@ class SupplierController extends Controller
         return datatables()
             ->of($supplier)
             ->addIndexColumn()
+            ->addIndexColumn('select_all', function ($supplier) {
+                return '<input type="checkbox" name="id[]" value="' . $supplier->id . '">';
+            })
             ->addColumn('aksi', function ($supplier) {
                 return ' 
                     <div class="">
@@ -73,7 +76,8 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        return response()->json($supplier);
     }
 
     /**
@@ -96,7 +100,8 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $supplier = Supplier::find($id)->update($request->all());
+        return response()->json('Data Berhasil Di Perbarui');
     }
 
     /**
@@ -107,6 +112,9 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        $supplier->delete();
+
+        return response(null, 204);
     }
 }
