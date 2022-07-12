@@ -32,6 +32,10 @@
   <link rel="stylesheet" href="{{ asset('AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ asset('aset/csscustom.css') }}">
+  {{-- <!--Font Popins-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap" rel="stylesheet"> --}}
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

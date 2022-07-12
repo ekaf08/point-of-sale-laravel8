@@ -23,7 +23,7 @@
               <form action="" method="post" class="form-member">
                 @csrf
                 <table class="table table-striped table-bordered">
-                  <thead class="header_tabel">
+                  <thead class="header_tabel" style="font-family: 'Poppins', sans-serif;">
                     <th class="ditengah" width="5%">
                       <input type="checkbox" name="select_all" id="select_all">
                     </th>
