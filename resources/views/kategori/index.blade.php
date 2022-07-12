@@ -20,10 +20,10 @@
             <!-- /.box-header -->
             <div class="box-body table-responsive">
               <table class="table table-striped table-bordered">
-                <thead>
-                  <th width="15%">No</th>
-                  <th>Kategori</th>
-                  <th width="10%"><i class="fa fa-cog"></i></th>
+                <thead class="header_tabel">
+                  <th class="ditengah" width="5%">No</th>
+                  <th class="ditengah">KATEGORI</th>
+                  <th class="ditengah" width="10%"><i class="fa fa-cog"></i></th>
                 </thead>
                 <tbody style="font-weight: normal;">
 

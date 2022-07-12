@@ -18,12 +18,12 @@
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-stiped table-bordered">
-                    <thead>
-                        <th width="5%">No</th>
-                        <th>Nama</th>
-                        <th>Telepon</th>
-                        <th>Alamat</th>
-                        <th width="15%"><i class="fa fa-cog"></i></th>
+                    <thead class="header_tabel">
+                        <th class="ditengah" width="5%">NO</th>
+                        <th class="ditengah">NAMA</th>
+                        <th class="ditengah">TELEPON</th>
+                        <th class="ditengah">ALAMAT</th>
+                        <th class="ditengah" width="10%"><i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody style="font-weight: normal;">
 

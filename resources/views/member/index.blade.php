@@ -23,16 +23,16 @@
               <form action="" method="post" class="form-member">
                 @csrf
                 <table class="table table-striped table-bordered">
-                  <thead>
-                    <th width="5%">
+                  <thead class="header_tabel">
+                    <th class="ditengah" width="5%">
                       <input type="checkbox" name="select_all" id="select_all">
                     </th>
-                    <th width="5%">No</th>
-                    <th>Kode Member</th>
-                    <th>Nama</th>
-                    <th>Telepon</th>
-                    <th>Alamat</th>
-                    <th width="10%"><i class="fa fa-cog"></i></th>
+                    <th class="ditengah" width="5%">NO</th>
+                    <th class="ditengah">KODE MEMBER</th>
+                    <th class="ditengah">NAMA</th>
+                    <th class="ditengah">TELEPON</th>
+                    <th class="ditengah">ALAMAT</th>
+                    <th class="ditengah" width="10%"><i class="fa fa-cog"></i></th>
                   </thead>
                   <tbody style="font-weight: normal;">
 

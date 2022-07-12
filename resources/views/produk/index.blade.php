@@ -24,18 +24,18 @@
                     <form action="" method="post" class="form-produk">
                         @csrf
                         <table class="table table-striped table-bordered">
-                            <thead style="background-color: #dd4b39; color: white;">
-                                <th width="3%"><input type="checkbox" name="select_all" id="select_all"></th>
-                                <th width="3%">No</th>
-                                <th width="5%">Kode</th>
-                                <th width="25%">Nama</th>
-                                <th width="10%">Kategori</th>
-                                <th width="8%">Merk</th>
-                                <th width="13%">Harga Beli</th>
-                                <th width="13%">Harga Jual</th>
-                                <th width="5">Diskon</th>
-                                <th width="5%">Stok</th>
-                                <th width="10%"><i class="fa fa-cog"></i></th>
+                            <thead class="header_tabel">
+                                <th class="ditengah" width="3%"><input type="checkbox" name="select_all" id="select_all"></th>
+                                <th class="ditengah" width="3%">NO</th>
+                                <th class="ditengah" width="5%">KODE</th>
+                                <th class="ditengah" width="25%">NAMA</th>
+                                <th class="ditengah" width="10%">KATEGORI</th>
+                                <th class="ditengah" width="8%">MERK</th>
+                                <th class="ditengah" width="13%">HARGA BELI</th>
+                                <th class="ditengah" width="13%">HARGA JUAL</th>
+                                <th class="ditengah" width="5">DISKON</th>
+                                <th class="ditengah" width="5%">STOK</th>
+                                <th class="ditengah" width="8%"><i class="fa fa-cog"></i></th>
                             </thead>
                             <tbody style="font-weight: normal;">
 
