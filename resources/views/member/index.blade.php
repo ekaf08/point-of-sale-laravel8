@@ -16,7 +16,7 @@
           <div class="box">
             <div class="box-header with-border">
               <button onclick="addForm('{{ route('member.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"> </i> Tambah Data</button>
-              <button onclick="cetakMember('{{ route('member.cetak_member') }}')" class="btn btn-info btn-xs btn-flat "><i class="fa fa-print"> Cetak Member</i></button>
+              <button onclick="cetakMember('{{ route('member.cetak_member') }}')" class="btn btn-info btn-xs btn-flat "><i class="fa fa-print"> </i> Cetak Member</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive">
@@ -148,7 +148,6 @@
         }
       }
 
-    
     
     </script>
 @endpush
