@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PembelianDetail;
 use App\Models\PembelianDetailController;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class PembelianDetailControllerController extends Controller
      */
     public function index()
     {
-        //
+        return view('pembelin_detail.index');
     }
 
     /**

@@ -8,7 +8,9 @@ use App\Http\Controllers\{
     PembelianController,
     PengeluaranController,
     SupplierController,
+    PembelianDetailController,
 };
+
 
 /*
 |--------------------------------------------------------------------------
@@ -56,4 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pembelian/{id}/create', PembelianController::class, 'create')->name('pembelian.create');
     Route::resource('/pembelian', PembelianController::class)
         ->except('create');
+    // ----------------Pembelian Detail-------------------------------
+    Route::resource('/pembelian-detail', PembelianDetailController::class)
+        ->except('create', 'show', 'edit');
 });
