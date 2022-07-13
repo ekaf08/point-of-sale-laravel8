@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    Daftar Supplier
+    Daftar Pembelian
 @endsection
 
 @section('breadcrumb')
     @parent
-    <li class="active">Daftar Supplier</li>
+    <li class="active">Daftar Pembelian</li>
 @endsection
 
 @section('content')
@@ -14,15 +14,18 @@
     <div class="col-lg-12">
         <div class="box">
             <div class="box-header with-border">
-                <button onclick="addForm('{{ route('supplier.store') }}')" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Tambah Supplier</button>
+                <button onclick="addForm()" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Transaksi Baru</button>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-stiped table-bordered">
                     <thead class="header_table">
                         <th class="text-center" width="5%">NO</th>
-                        <th class="text-center">NAMA</th>
-                        <th class="text-center">TELEPON</th>
-                        <th class="text-center">ALAMAT</th>
+                        <th class="text-center" width="15%">TANGAL</th>
+                        <th class="text-center" width="15%">SUPPLIER</th>
+                        <th class="text-center" width="15%">TOTAL ITEM</th>
+                        <th class="text-center" width="15%">TOTAL HARGA</th>
+                        <th class="text-center" width="10%">DISKON</th>
+                        <th class="text-center" width="15%">TOTAL BAYAR</th>
                         <th class="text-center" width="10%"><i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody style="font-weight: normal;">
@@ -34,7 +37,7 @@
     </div>
 </div>
 
-@includeIf('supplier.form')
+@includeIf('pembelian.supplier')
 @endsection
 
 @push('scripts')
@@ -43,50 +46,45 @@
 
     $(function () {
         table = $('.table').DataTable({
-            responsive: true,
-            processing: true,
-            serverSide: true,
-            autoWidth: false,
-            ajax: {
-                url: '{{ route('supplier.data') }}',
-            },
-            columns: [
-                {data: 'DT_RowIndex', searchable: false, sortable: false},
-                {data: 'nama'},
-                {data: 'telepon'},
-                {data: 'alamat'},
-                {data: 'aksi', searchable: false, sortable: false},
-            ]
+            // responsive: true,
+            // processing: true,
+            // serverSide: true,
+            // autoWidth: false,
+            // ajax: {
+            //     url: '{{ route('supplier.data') }}',
+            // },
+            // columns: [
+            //     {data: 'DT_RowIndex', searchable: false, sortable: false},
+            //     {data: 'nama'},
+            //     {data: 'telepon'},
+            //     {data: 'alamat'},
+            //     {data: 'aksi', searchable: false, sortable: false},
+            // ]
         });
 
-        $('#modal-form').validator().on('submit', function (e) {
-            if (! e.preventDefault()) {
-                $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
-                    .done((response) => {
-                        $('#modal-form').modal('hide');
-                        table.ajax.reload();
-                    })
-                    .fail((errors) => {
-                        alert('Tidak dapat menyimpan data');
-                        return;
-                    });
-            }
-        });
+        // $('#modal-form').validator().on('submit', function (e) {
+        //     if (! e.preventDefault()) {
+        //         $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
+        //             .done((response) => {
+        //                 $('#modal-form').modal('hide');
+        //                 table.ajax.reload();
+        //             })
+        //             .fail((errors) => {
+        //                 alert('Tidak dapat menyimpan data');
+        //                 return;
+        //             });
+        //     }
+        // });
     });
 
-    function addForm(url) {
-        $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Tambah Supplier');
-
-        $('#modal-form form')[0].reset();
-        $('#modal-form form').attr('action', url);
-        $('#modal-form [name=_method]').val('post');
-        $('#modal-form [name=nama_supplier]').focus();
+    function addForm() {
+        $('#modal-supplier').modal('show');
+        $('#modal-supplier .modal-title').text('Daftar Supplier');
     }
 
-    function editForm(url) {
+    function editForm() {
         $('#modal-form').modal('show');
-        $('#modal-form .modal-title').text('Edit Supplier');
+        $('#modal-form .modal-title').text('Edit Pembelian');
 
         $('#modal-form form')[0].reset();
         $('#modal-form form').attr('action', url);

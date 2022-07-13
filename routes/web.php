@@ -5,6 +5,7 @@ use App\Http\Controllers\{
     ProdukController,
     KategoriController,
     MemberController,
+    PembelianController,
     PengeluaranController,
     SupplierController,
 };
@@ -49,4 +50,10 @@ Route::group(['middleware' => 'auth'], function () {
     // ----------------Pengeluaran-------------------------------
     Route::get('/pengeluaran/data', [PengeluaranController::class, 'data'])->name('pengeluaran.data');
     Route::resource('/pengeluaran', PengeluaranController::class);
+
+    // ----------------Pembelian-------------------------------
+    // Route::get('/pembelian/data', [PengeluaranController::class, 'data'])->name('pembelian.data');
+    Route::get('/pembelian/{id}/create', PembelianController::class, 'create')->name('pembelian.create');
+    Route::resource('/pembelian', PembelianController::class)
+        ->except('create');
 });

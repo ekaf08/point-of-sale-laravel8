@@ -18,12 +18,12 @@
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-stiped table-bordered">
-                    <thead class="header_tabel">
-                        <th class="ditengah" width="5%">NO</th>
-                        <th class="ditengah" width="15%">TANGGAL</th>
-                        <th class="ditengah" width="45%">JENIS PENGELUARAN</th>
-                        <th class="ditengah" width="20%">NOMINAL</th>
-                        <th class="ditengah" width="15%"><i class="fa fa-cog"></i></th>
+                    <thead class="header_table">
+                        <th class="text-center" width="5%">NO</th>
+                        <th class="text-center" width="15%">TANGGAL</th>
+                        <th class="text-center" width="45%">JENIS PENGELUARAN</th>
+                        <th class="text-center" width="20%">NOMINAL</th>
+                        <th class="text-center" width="15%"><i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody style="font-weight: normal;">
 

@@ -23,16 +23,16 @@
               <form action="" method="post" class="form-member">
                 @csrf
                 <table class="table table-striped table-bordered">
-                  <thead class="header_tabel" style="font-family: 'Poppins', sans-serif;">
-                    <th class="ditengah" width="5%">
+                  <thead class="header_table" style="font-family: 'Poppins', sans-serif;">
+                    <th class="text-center" width="5%">
                       <input type="checkbox" name="select_all" id="select_all">
                     </th>
-                    <th class="ditengah" width="5%">NO</th>
-                    <th class="ditengah">KODE MEMBER</th>
-                    <th class="ditengah">NAMA</th>
-                    <th class="ditengah">TELEPON</th>
-                    <th class="ditengah">ALAMAT</th>
-                    <th class="ditengah" width="10%"><i class="fa fa-cog"></i></th>
+                    <th class="text-center" width="5%">NO</th>
+                    <th class="text-center">KODE MEMBER</th>
+                    <th class="text-center">NAMA</th>
+                    <th class="text-center">TELEPON</th>
+                    <th class="text-center">ALAMAT</th>
+                    <th class="text-center" width="10%"><i class="fa fa-cog"></i></th>
                   </thead>
                   <tbody style="font-weight: normal;">
 

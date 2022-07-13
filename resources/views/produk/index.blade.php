@@ -24,18 +24,18 @@
                     <form action="" method="post" class="form-produk">
                         @csrf
                         <table class="table table-striped table-bordered">
-                            <thead class="header_tabel">
-                                <th class="ditengah" width="3%"><input type="checkbox" name="select_all" id="select_all"></th>
-                                <th class="ditengah" width="3%">NO</th>
-                                <th class="ditengah" width="5%">KODE</th>
-                                <th class="ditengah" width="25%">NAMA</th>
-                                <th class="ditengah" width="10%">KATEGORI</th>
-                                <th class="ditengah" width="8%">MERK</th>
-                                <th class="ditengah" width="13%">HARGA BELI</th>
-                                <th class="ditengah" width="13%">HARGA JUAL</th>
-                                <th class="ditengah" width="5">DISKON</th>
-                                <th class="ditengah" width="5%">STOK</th>
-                                <th class="ditengah" width="8%"><i class="fa fa-cog"></i></th>
+                            <thead class="header_table">
+                                <th class="text-center" width="3%"><input type="checkbox" name="select_all" id="select_all"></th>
+                                <th class="text-center" width="3%">NO</th>
+                                <th class="text-center" width="5%">KODE</th>
+                                <th class="text-center" width="25%">NAMA</th>
+                                <th class="text-center" width="10%">KATEGORI</th>
+                                <th class="text-center" width="8%">MERK</th>
+                                <th class="text-center" width="13%">HARGA BELI</th>
+                                <th class="text-center" width="13%">HARGA JUAL</th>
+                                <th class="text-center" width="5">DISKON</th>
+                                <th class="text-center" width="5%">STOK</th>
+                                <th class="text-center" width="8%"><i class="fa fa-cog"></i></th>
                             </thead>
                             <tbody style="font-weight: normal;">
 

@@ -65,7 +65,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('pembelian.index') }}">
                         <i class="fa fa-download"></i> <span>Transaksi Pembelian</span>
                     </a>
                 </li>
