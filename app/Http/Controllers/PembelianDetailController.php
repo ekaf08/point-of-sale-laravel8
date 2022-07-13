@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PembelianDetail;
+use App\Models\Produk;
+use App\Models\Supplier;
 use App\Models\PembelianDetailController;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,13 @@ class PembelianDetailControllerController extends Controller
      */
     public function index()
     {
-        return view('pembelin_detail.index');
+        $id_pembelin = session('id_pembelian');
+        $produk = Produk::orderBy('nama_produk')->get();
+        $supplier = Supplier::find(session('id_supplier'));
+        if (!$supplier) {
+            abort(404);
+        }
+        return view('pembelin_detail.index', compact('id_pembelian', 'produk', 'supplier'));
     }
 
     /**
