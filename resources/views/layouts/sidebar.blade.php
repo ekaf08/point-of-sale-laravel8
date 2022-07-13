@@ -55,7 +55,7 @@
                 </li>
             <li class="header">TRANSAKSI</li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('pengeluaran.index') }}">
                         <i class="fa fa-money"></i> <span>Pengeluaran</span>
                     </a>
                 </li>

@@ -183,4 +183,14 @@
         }
     }
 </script>
+
+<script type="text/javascript" language="javascript">
+    //  upper halaman produk
+    function kapital(){
+      var merk = document.getElementById("merk");
+      merk.value = merk.value.toUpperCase();
+      var np = document.getElementById("nama_produk");
+      np.value = np.value.toUpperCase();
+    }
+</script>
 @endpush

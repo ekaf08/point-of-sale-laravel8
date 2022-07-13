@@ -115,4 +115,12 @@
       }
     
     </script>
+
+    <script type="text/javascript" language="javascript">
+        // upper halaman kategori
+    function kapital1(){
+      var nk = document.getElementById("nama_kategori");
+      nk.value = nk.value.toUpperCase();
+    }
+    </script>
 @endpush

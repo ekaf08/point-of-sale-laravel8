@@ -150,4 +150,14 @@
 
     
     </script>
+    <script type="text/javascript" language="javascript">
+      // upper halaman member
+      function hurufkapital() {
+          var x = document.getElementById("nama");
+          x.value = x.value.toUpperCase();
+
+          var almt = document.getElementById("alamat");
+          almt.value = almt.value.toUpperCase();
+     }
+    </script>
 @endpush

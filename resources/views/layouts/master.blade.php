@@ -85,41 +85,6 @@
 </div>
 <!-- ./wrapper -->
 
-<script type="text/javascript" language="javascript">
-// upper halaman member
-  function hurufkapital() {
-       var x = document.getElementById("nama");
-       x.value = x.value.toUpperCase();
-
-       var almt = document.getElementById("alamat");
-       almt.value = almt.value.toUpperCase();
-     }
-
-//  upper halaman produk
-     function kapital(){
-      var merk = document.getElementById("merk");
-      merk.value = merk.value.toUpperCase();
-      var np = document.getElementById("nama_produk");
-      np.value = np.value.toUpperCase();
-    }
-
-// upper halaman kategori
-    function kapital1(){
-      var nk = document.getElementById("nama_kategori");
-      nk.value = nk.value.toUpperCase();
-    }
-
-    // upper halaman supplier
-    function upsupplier(){
-      var x = document.getElementById("nama_supplier");
-       x.value = x.value.toUpperCase();
-       var almt = document.getElementById("alamat");
-       almt.value = almt.value.toUpperCase();
-    }
-
-</script>
-
-
 <!-- jQuery 3 -->
 <script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- jQuery UI 1.11.4 -->
