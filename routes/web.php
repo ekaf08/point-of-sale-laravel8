@@ -55,10 +55,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     // ----------------Pembelian-------------------------------
     // Route::get('/pembelian/data', [PengeluaranController::class, 'data'])->name('pembelian.data');
-    Route::get('/pembelian/{id}/create', PembelianController::class, 'create')->name('pembelian.create');
+    Route::get('/pembelian/{id}/create', [PembelianController::class, 'create'])->name('pembelian.create');
     Route::resource('/pembelian', PembelianController::class)
         ->except('create');
     // ----------------Pembelian Detail-------------------------------
-    Route::resource('/pembelian-detail', PembelianDetailController::class)
+    Route::resource('/pembelian_detail', PembelianDetailController::class)
         ->except('create', 'show', 'edit');
 });

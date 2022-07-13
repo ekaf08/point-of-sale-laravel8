@@ -19,6 +19,7 @@ class Pembelian extends Migration
             $table->integer('total_item');
             $table->integer('total_harga');
             $table->tinyInteger('diskon')->default(0);
+            $table->integer('bayar');
             $table->timestamps();
         });
     }

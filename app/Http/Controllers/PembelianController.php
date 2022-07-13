@@ -35,8 +35,8 @@ class PembelianController extends Controller
         $pembelian->bayar = 0;
         $pembelian->save();
 
-        session(['id_pembelian', $pembelian->id]);
-        session(['id_supplier', $pembelian->id_supplier]);
+        session(['id_pembelian' => $pembelian->id]);
+        session(['id_supplier' => $pembelian->id_supplier]);
 
         return redirect()->route('pembelian_detail.index');
     }
