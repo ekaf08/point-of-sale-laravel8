@@ -31,14 +31,14 @@ class PembelianDetailController extends Controller
 
     public function data($id)
     {
-        // $detail = PembelianDetail::leftJoin('produk', 'produk.id', 'detail_pembelian.id_produk')
-        //     ->select('detail_pembelian.*', 'produk.nama_produk', 'produk.kode_produk')
-        //     ->where('detail_pembelian.id_pembelian', $id)->get();
+        $detail = PembelianDetail::leftJoin('produk', 'produk.id', 'detail_pembelian.id_produk')
+            ->select('detail_pembelian.*', 'produk.nama_produk', 'produk.kode_produk')
+            ->where('detail_pembelian.id_pembelian', $id)->get();
 
         // menggunakan Eloquent
-        $detail = PembelianDetail::with('produk')
-            ->where('id_pembelian', $id)
-            ->get();
+        // $detail = PembelianDetail::with('produk')
+        //     ->where('id_pembelian', $id)
+        //     ->get();
 
         // return $detail;
 

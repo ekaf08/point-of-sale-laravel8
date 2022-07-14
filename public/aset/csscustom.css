@@ -15,6 +15,25 @@
     text-align: center;
     font-family: "Poppins", sans-serif;
 }
+
+.tampil-bayar {
+    font-size: 5em;
+    text-align: center;
+    height: 100px;
+}
+
+.tampil-terbilang {
+    padding: 10px;
+    background: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+    .tampil-bayar {
+        font-size: 3em;
+        height: 70px;
+        padding-top: 5px;
+    }
+}
 /* 
 button .btn {
     font-family: "Poppins", sans-serif;

@@ -30,7 +30,7 @@
                     </tr>
                 </table>
             </div>
-            <div class="box-body table-responsive">
+            <div class="box-body">
               <form class="form-produk">
                 @csrf
                 <div class="form-group row">
@@ -52,15 +52,53 @@
                         <th class="text-center" width="5%">NO</th>
                         <th class="text-center" width="15%">KODE</th>
                         <th class="text-center" width="15%">NAMA</th>
-                        <th class="text-center" width="10%">HARGA</th>
-                        <th class="text-center" width="15%">JUMLAH</th>
-                        <th class="text-center" width="10%">SUB TOTAL</th>
+                        <th class="text-center" width="15%">HARGA</th>
+                        <th class="text-center" width="10%">JUMLAH</th>
+                        <th class="text-center" width="15%">SUB TOTAL</th>
                         <th class="text-center" width="10%"><i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody style="font-weight: normal;">
                        
                     </tbody>
                 </table>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="tampil-bayar bg-primary"></div>
+                        <div class="tampil-terbilang"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <form action="{{ route('pembelian.store') }}" class="form-pembelian" method="POST">
+                            @csrf
+                            <input type="hidden" name="id_pembelian" value="{{ $id_pembelian }}">
+                            <input type="hidden" name="total" id="total">
+                            <input type="hidden" name="total_item" id="total_item">
+                            <input type="hidden" name="bayar" id="bayar">
+                            
+                            <div class="form-group row">
+                                <label for="totalrp" class="col-lg-2 control-label">TOTAL</label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="totalrp" id="totalrp" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="diskon" class="col-lg-2 control-label">DISKON</label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="diskon" id="diskon" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="bayar" class="col-lg-2 control-label">BAYAR</label>
+                                <div class="col-lg-8">
+                                    <input type="text" name="bayar" id="bayar" class="form-control">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
             </div>
         </div>
     </div>
@@ -91,7 +129,9 @@
                 {data: 'jumlah'},
                 {data: 'subtotal'},
                 {data: 'aksi', searchable: false, sortable: false},
-            ]
+            ],
+            dom: 'Brt',
+            bSort: false,
         });
 
         //ini untuk data tabel produk
@@ -103,14 +143,27 @@
             // console.log(id);
             // return;
             let id = $(this).data('id');
-            let jumlah = $(this).val();
+            let jumlah = parseInt($(this).val());
+            if(jumlah < 1) {
+                alert('Jumlah stok tidak bole kurang dari 1');
+                $(this).val(10000);
+                return;
+            }
+            if(jumlah > 10000) {
+                alert('Jumlah stok tidak boleh lebih dari 10.000');
+                $(this).val(10000);
+                return;
+            }
+
             $.post(`{{ url('/pembelian_detail') }}/${id}`,{
                 '_token': $('[name=csrf-token]').attr('content'),
                 '_method': 'put',
                 'jumlah':jumlah 
             })
                 .done(response => {
-                    table_ajax.ajax.reload();
+                    $(this).on('mouseout', function(){
+                        table_ajax.ajax.reload();
+                    });
                 })
                 .fail(errors => {
                     alert('Tidak dapat menyimpan data');
