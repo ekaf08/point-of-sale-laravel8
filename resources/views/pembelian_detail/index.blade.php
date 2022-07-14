@@ -47,18 +47,18 @@
                         </div>
                 </div>
               </form>
-                <table class="table table-stiped table-bordered">
+                <table class="table table-stiped table-bordered table-pembelian">
                     <thead class="header_table">
                         <th class="text-center" width="5%">NO</th>
                         <th class="text-center" width="15%">KODE</th>
                         <th class="text-center" width="15%">NAMA</th>
-                        <th class="text-center" width="15%">HARGA</th>
+                        <th class="text-center" width="10%">HARGA</th>
                         <th class="text-center" width="15%">JUMLAH</th>
                         <th class="text-center" width="10%">SUB TOTAL</th>
                         <th class="text-center" width="10%"><i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody style="font-weight: normal;">
-
+                       
                     </tbody>
                 </table>
             </div>
@@ -71,10 +71,11 @@
 
 @push('scripts')
 <script>
-    let table;
+    // ini untuk membedakan tabel produk dan tabale detail pembelian, di bedakan dengan nama class 
+    let table_ajax, table2;
 
     $(function () {
-        table = $('.table').DataTable({
+        table_ajax = $('.table-pembelian').DataTable({
             responsive: true,
             processing: true,
             serverSide: true,
@@ -91,6 +92,30 @@
                 {data: 'subtotal'},
                 {data: 'aksi', searchable: false, sortable: false},
             ]
+        });
+
+        //ini untuk data tabel produk
+        table2 = $('table-produk').DataTable()
+
+        $(document).on('input', '.quantity', function () {
+            // console.log($(this).val());
+            
+            // console.log(id);
+            // return;
+            let id = $(this).data('id');
+            let jumlah = $(this).val();
+            $.post(`{{ url('/pembelian_detail') }}/${id}`,{
+                '_token': $('[name=csrf-token]').attr('content'),
+                '_method': 'put',
+                'jumlah':jumlah 
+            })
+                .done(response => {
+                    table_ajax.ajax.reload();
+                })
+                .fail(errors => {
+                    alert('Tidak dapat menyimpan data');
+                    return;
+                });
         });
 
         // $('#modal-form').validator().on('submit', function (e) {
@@ -117,6 +142,7 @@
         $('#modal-produk').modal('hide');
     }
 
+    //fungsi untuk menambah data pada tabel detail pembelian
     function pilihProduk(id,kode){
         $('#id_produk').val(id);
         $('#kode_produk').val(kode);
@@ -128,6 +154,7 @@
         $.post('{{ route('pembelian_detail.store') }}', $('.form-produk').serialize())
         .done(response => {
             $('#kode_produk').focus();
+            table_ajax.ajax.reload();
         })
         .fail(errors => {
             alert('Tidak dapat menyimpan data');
@@ -142,7 +169,7 @@
                     '_method': 'delete'
                 })
                 .done((response) => {
-                    table.ajax.reload();
+                    table_ajax.ajax.reload();
                 })
                 .fail((errors) => {
                     alert('Tidak dapat menghapus data');

@@ -7,9 +7,11 @@ use App\Models\Pembelian;
 use App\Models\PembelianDetail;
 use App\Models\Produk;
 use App\Models\Supplier;
+use DetailPembelian;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+use Svg\Tag\Rect;
 
 class PembelianDetailController extends Controller
 {
@@ -17,6 +19,7 @@ class PembelianDetailController extends Controller
     {
         $id_pembelian = session('id_pembelian');
         $produk = Produk::orderBy('nama_produk')->get();
+        // return $produk;
         $supplier = Supplier::find(session('id_supplier'));
 
         // return session('id_supplier');
@@ -28,14 +31,14 @@ class PembelianDetailController extends Controller
 
     public function data($id)
     {
-        $detail = PembelianDetail::leftJoin('produk', 'produk.id', 'detail_pembelian.id_produk')
-            ->select('detail_pembelian.*', 'produk.nama_produk', 'produk.kode_produk')
-            ->where('detail_pembelian.id_pembelian', $id)->get();
+        // $detail = PembelianDetail::leftJoin('produk', 'produk.id', 'detail_pembelian.id_produk')
+        //     ->select('detail_pembelian.*', 'produk.nama_produk', 'produk.kode_produk')
+        //     ->where('detail_pembelian.id_pembelian', $id)->get();
 
         // menggunakan Eloquent
-        // $detail = PembelianDetail::with('produk')
-        //     ->where('id_pembelian', $id)
-        //     ->get();
+        $detail = PembelianDetail::with('produk')
+            ->where('id_pembelian', $id)
+            ->get();
 
         // return $detail;
 
@@ -48,6 +51,16 @@ class PembelianDetailController extends Controller
             ->addColumn('kode_produk', function ($detail) {
                 return '<span class="label label-success">' . $detail->produk['kode_produk'] . '</span>';
             })
+            ->addColumn('harga_beli', function ($detail) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->harga_beli) . '</p>';
+            })
+            ->addColumn('jumlah', function ($detail) {
+
+                return '<input type="number" class="form-control input-sm quantity" data-id="' . $detail->id . '" value="' . $detail->jumlah . '">';
+            })
+            ->addColumn('subtotal', function ($detail) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->subtotal) . '</p>';
+            })
             ->addColumn('aksi', function ($detail) {
                 return '
                 <div class="btn-group">
@@ -55,7 +68,7 @@ class PembelianDetailController extends Controller
                 </div>
                 ';
             })
-            ->rawColumns(['aksi', 'nama_produk', 'kode_produk'])
+            ->rawColumns(['aksi', 'kode_produk', 'harga_beli', 'jumlah', 'subtotal'])
             ->make(true);
     }
 
@@ -75,5 +88,21 @@ class PembelianDetailController extends Controller
         $detail->save();
 
         return response()->json('Data berhasil disimpan', 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $detail = PembelianDetail::find($id);
+        $detail->jumlah = $request->jumlah;
+        $detail->subtotal = $detail->harga_beli * $request->jumlah;
+        $detail->update();
+    }
+
+    public function destroy($id)
+    {
+        $detail = PembelianDetail::find($id);
+        $detail->delete();
+
+        return response(null, 204);
     }
 }
