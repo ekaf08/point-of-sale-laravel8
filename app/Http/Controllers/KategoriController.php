@@ -61,7 +61,8 @@ class KategoriController extends Controller
         $kategori = new Kategori();
         $kategori->nama = $request->nama_kategori;
         $kategori->save();
-
+        // $success = "Kategori Berhasil Ditambahkan";
+        // return redirect()->route('kelas')->with('status','Data berhasil tambahkan!')->with('tipe','success')->with('icon','fas fa-feather');
         return response()->json('Data Berhasil Disimpan', 200);
     }
 

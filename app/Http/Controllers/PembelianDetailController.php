@@ -42,6 +42,24 @@ class PembelianDetailController extends Controller
 
         // return $detail;
 
+        $data = array();
+        $total = 0;
+        $total_item = 0;
+
+        foreach ($detail as $key => $item) {
+            $row = array();
+            $row['DT_RowIndex'] = $key + 1;
+            $row['kode_produk'] = '<span class="label label-success">' . $item->produk['kode_produk'] . '</span>';
+            $row['nama_produk'] = $item->produk['nama_produk'];
+            $row['harga_beli'] = '<p class="text-right">' . 'Rp. ' .  format_uang($item->harga_beli) . '</p>';
+            $row['jumlah'] = '<input type="number" class="form-control input-sm quantity" data-id="' . $item->id . '" value="' . $detail->jumlah . '">';
+            $row['subtotal'] = $item->subtotal;
+            $data[] = $row;
+
+            $total += $item->harga_beli * $item->jumlah;
+            $total_item += $item->jumlah;
+        }
+
         return datatables()
             ->of($detail)
             ->addIndexColumn()
@@ -52,7 +70,7 @@ class PembelianDetailController extends Controller
                 return '<span class="label label-success">' . $detail->produk['kode_produk'] . '</span>';
             })
             ->addColumn('harga_beli', function ($detail) {
-                return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->harga_beli) . '</p>';
+                return '<p class="text-right">' . 'Rp. ' .  format_uang($detail->harga_beli) . '</p>';
             })
             ->addColumn('jumlah', function ($detail) {
 
