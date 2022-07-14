@@ -41,7 +41,7 @@
                                 <input type="hidden" name="id_produk" id="id_produk">
                                 <input type="text" class="form-control" name="kode_produk" id="kode_produk">
                                 <span class="input-group-btn">
-                                    <button onclick="tampilProduk()" type="button" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i></button>
+                                    <button onclick="tampilProduk()" type="button" class="btn btn-info btn-flat"><i class="fa fa-plus-circle"></i></button>
                                 </span>
                             </div>                   
                         </div>
@@ -75,20 +75,22 @@
 
     $(function () {
         table = $('.table').DataTable({
-            // responsive: true,
-            // processing: true,
-            // serverSide: true,
-            // autoWidth: false,
-            // ajax: {
-            //     url: '{{ route('supplier.data') }}',
-            // },
-            // columns: [
-            //     {data: 'DT_RowIndex', searchable: false, sortable: false},
-            //     {data: 'nama'},
-            //     {data: 'telepon'},
-            //     {data: 'alamat'},
-            //     {data: 'aksi', searchable: false, sortable: false},
-            // ]
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: {
+                url: '{{ route('pembelian_detail.data', $id_pembelian) }}',    
+            },
+            columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'kode_produk'},
+                {data: 'nama_produk'},
+                {data: 'harga_beli'},
+                {data: 'jumlah'},
+                {data: 'subtotal'},
+                {data: 'aksi', searchable: false, sortable: false},
+            ]
         });
 
         // $('#modal-form').validator().on('submit', function (e) {
