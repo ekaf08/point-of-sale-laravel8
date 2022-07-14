@@ -10,6 +10,6 @@ class PembelianDetail extends Model
     use HasFactory;
 
     protected $table = 'detail_pembelian';
-    protected $guarded = [];
+    protected $guarded = ['id'];
     protected $primaryKey = 'id';
 }

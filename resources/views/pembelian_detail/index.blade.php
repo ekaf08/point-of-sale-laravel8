@@ -31,17 +31,22 @@
                 </table>
             </div>
             <div class="box-body table-responsive">
+              <form class="form-produk">
+                @csrf
                 <div class="form-group row">
                     <label for="kode_produk" class="col-lg-1" style="font-size: 18px; font-weight: bold;">KODE PRODUK : </label>
                         <div class="col-lg-5">
                             <div class="input-group">
+                                <input type="hidden" name="id_pembelian" id="id_pembelian" value="{{ $id_pembelian }}">
+                                <input type="hidden" name="id_produk" id="id_produk">
                                 <input type="text" class="form-control" name="kode_produk" id="kode_produk">
                                 <span class="input-group-btn">
                                     <button onclick="tampilProduk()" type="button" class="btn btn-success btn-flat"><i class="fa fa-plus-circle"></i></button>
                                 </span>
                             </div>                   
                         </div>
-                    </div>
+                </div>
+              </form>
                 <table class="table table-stiped table-bordered">
                     <thead class="header_table">
                         <th class="text-center" width="5%">NO</th>
@@ -106,8 +111,26 @@
         $('#modal-produk .modal-title').text('Daftar Produk');
     }
 
+    function hideProduk() {
+        $('#modal-produk').modal('hide');
+    }
+
     function pilihProduk(id,kode){
-        
+        $('#id_produk').val(id);
+        $('#kode_produk').val(kode);
+        hideProduk();
+        tambahProduk();
+    }
+
+    function tambahProduk() {
+        $.post('{{ route('pembelian_detail.store') }}', $('.form-produk').serialize())
+        .done(response => {
+            $('#kode_produk').focus();
+        })
+        .fail(errors => {
+            alert('Tidak dapat menyimpan data');
+            return;
+        });
     }
 
     function deleteData(url) {

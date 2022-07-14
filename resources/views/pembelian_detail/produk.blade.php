@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <h4 class="modal-title"></h4>
+                  <h4 class="modal-title"><strong> - Pilih Produk</strong></h4>
                 </div>
 		<!--ISI MODAL-->
                 <div class="modal-body">
@@ -25,7 +25,7 @@
                                     <td>{{ $item->nama_produk }}</td>
                                     <td>{{ $item->harga_beli }}</td>      
                                     <td>
-                                        <a href="#" class="btn btn-primary btn-xs btn-flat" onclick="pilihProduk('{{ $item->id }}', {{ $item->kode_produk }})"><i class="fa fa-check-circle"></i> Pilih</a>
+                                        <a href="#" class="btn btn-primary btn-xs btn-flat" onclick="pilihProduk('{{ $item->id }}', '{{ $item->kode_produk }}')"><i class="fa fa-check-circle"></i> Pilih</a>
                                     </td>
                                 </tr>                          
                             @endforeach
