@@ -151,7 +151,7 @@
             let jumlah = parseInt($(this).val());
             if(jumlah < 1) {
                 alert('Jumlah stok tidak bole kurang dari 1');
-                $(this).val(10000);
+                $(this).val(10);
                 return;
             }
             if(jumlah > 10000) {
@@ -171,7 +171,7 @@
                     });
                 })
                 .fail(errors => {
-                    alert('Tidak dapat menyimpan data');
+                    // alert('Tidak dapat menyimpan data');
                     return;
                 });
         });

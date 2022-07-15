@@ -15,6 +15,10 @@
         <div class="box">
             <div class="box-header with-border">
                 <button onclick="addForm()" class="btn btn-success btn-xs btn-flat"><i class="fa fa-plus-circle"></i> Transaksi Baru</button>
+                {{-- cek apakah ada transaksi aktif atau tidak --}}
+                @empty(!session('id_pembelian'))                  
+                    <a href="{{ route('pembelian_detail.index') }}" class="btn btn-info btn-xs btn-flat"><i class="fa fa-edit"></i> Transaksi Aktif</a>
+                @endempty
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-stiped table-bordered">
@@ -46,20 +50,23 @@
 
     $(function () {
         table = $('.table').DataTable({
-            // responsive: true,
-            // processing: true,
-            // serverSide: true,
-            // autoWidth: false,
-            // ajax: {
-            //     url: '{{ route('supplier.data') }}',
-            // },
-            // columns: [
-            //     {data: 'DT_RowIndex', searchable: false, sortable: false},
-            //     {data: 'nama'},
-            //     {data: 'telepon'},
-            //     {data: 'alamat'},
-            //     {data: 'aksi', searchable: false, sortable: false},
-            // ]
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: {
+                url: '{{ route('pembelian.data') }}',
+            },
+            columns: [
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'created_at'},
+                {data: 'nama'},
+                {data: 'total_item'},
+                {data: 'total_harga'},  
+                {data: 'diskon'},  
+                {data: 'bayar'},  
+                {data: 'aksi', searchable: false, sortable: false},
+            ]
         });
 
         // $('#modal-form').validator().on('submit', function (e) {

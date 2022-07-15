@@ -7,7 +7,7 @@ use App\Models\Produk;
 use App\Models\PembelianDetail;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
-
+use Sabberworm\CSS\Property\Selector;
 
 class PembelianController extends Controller
 {
@@ -21,6 +21,47 @@ class PembelianController extends Controller
         $supplier = Supplier::orderBy('nama')->get();
 
         return view('pembelian.index', compact('supplier'));
+    }
+
+    public function data()
+    {
+        // $pembelian = Pembelian::orderBy('id', 'desc')->get();
+        $pembelian = Pembelian::leftJoin('supplier', 'supplier.id', 'pembelian.id_supplier')
+            ->select('pembelian.*', 'supplier.nama')
+            ->orderBy('pembelian.id', 'desc')
+            ->get();
+
+        return datatables()
+            ->of($pembelian)
+            ->addIndexColumn()
+            ->addColumn('created_at', function ($pembelian) {
+                return tanggal_indonesia($pembelian->created_at);
+            })
+            // ->addColumn('supplier', function ($pembelian) {
+            //     return $pembelian->supplier->nama;
+            // })
+            ->addColumn('total_harga', function ($pembelian) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($pembelian->total_harga) . '</p>';
+            })
+            ->addColumn('bayar', function ($pembelian) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($pembelian->bayar) . '</p>';
+            })
+            ->addColumn('total_item', function ($pembelian) {
+                return ' <p class="text-right">' . format_uang($pembelian->total_item) . '</p>';
+            })
+            ->addColumn('diskon', function ($pembelian) {
+                return ' <p class="text-right">' . ($pembelian->diskon) . '</p>';
+            })
+            ->addColumn('aksi', function ($pembelian) {
+                return '
+                    <div class="">
+                        <button onclick="detail(`' . route('pembelian.show', $pembelian->id) . '`)" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-eye"></i></button>
+                        <button onclick="deleteData(`' . route('pembelian_detail.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                    </div>
+                ';
+            })
+            ->rawColumns(['aksi', 'supplier', 'total_harga', 'total_item', 'diskon', 'bayar'])
+            ->make(true);
     }
 
     /**
@@ -60,16 +101,18 @@ class PembelianController extends Controller
         $pembelian->diskon = $request->diskon;
         $pembelian->bayar = $request->bayar;
         $pembelian->update();
+        // return $pembelian;
 
         // update stok yang ada di tabel produk
         $detail = PembelianDetail::where('id_pembelian', $pembelian->id)->get();
+        // dd($detail);
+        // return $detail;
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
             $produk->stok += $item->jumlah;
             $produk->update();
-
-            return redirect()->route('pembelian.index');
         }
+        return redirect()->route('pembelian.index');
     }
 
     /**
