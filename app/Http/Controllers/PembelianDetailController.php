@@ -48,46 +48,69 @@ class PembelianDetailController extends Controller
 
         foreach ($detail as $key => $item) {
             $row = array();
-            $row['DT_RowIndex'] = $key + 1;
+            // $row['DT_RowIndex'] = $key + 1;
             $row['kode_produk'] = '<span class="label label-success">' . $item->produk['kode_produk'] . '</span>';
             $row['nama_produk'] = $item->produk['nama_produk'];
             $row['harga_beli'] = '<p class="text-right">' . 'Rp. ' .  format_uang($item->harga_beli) . '</p>';
-            $row['jumlah'] = '<input type="number" class="form-control input-sm quantity" data-id="' . $item->id . '" value="' . $detail->jumlah . '">';
-            $row['subtotal'] = $item->subtotal;
+            $row['jumlah'] = '<input type="number" class="form-control input-sm quantity" data-id="' . $item->id . '" value="' . $item->jumlah . '">';
+            $row['subtotal'] = ' <p class="text-right">' . 'Rp. ' .  format_uang($item->subtotal) . '</p>';
+            $row['aksi'] = '<div class="btn-group">
+                                <button onclick="deleteData(`' . route('pembelian_detail.destroy', $item->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+                            </div>';
             $data[] = $row;
 
             $total += $item->harga_beli * $item->jumlah;
             $total_item += $item->jumlah;
         }
+        $data[] = [
+            // '<div class="total hide">' . $total . '</div> <div class = "total_item hide">' . $total_item . '</div>',
+            'kode_produk' => '
+                            <div class="total hide">' . $total . '</div> 
+                            <div class = "total_item hide">' . $total_item . '</div>
+                            ',
+            'nama_produk' => '',
+            'harga_beli' => '',
+            'jumlah' => '',
+            'subtotal' => '',
+            'aksi' => '',
+        ];
+
+        // return $data;
 
         return datatables()
-            ->of($detail)
+            ->of($data)
             ->addIndexColumn()
-            ->addColumn('nama_produk', function ($detail) {
-                return $detail->produk['nama_produk'];
-            })
-            ->addColumn('kode_produk', function ($detail) {
-                return '<span class="label label-success">' . $detail->produk['kode_produk'] . '</span>';
-            })
-            ->addColumn('harga_beli', function ($detail) {
-                return '<p class="text-right">' . 'Rp. ' .  format_uang($detail->harga_beli) . '</p>';
-            })
-            ->addColumn('jumlah', function ($detail) {
-
-                return '<input type="number" class="form-control input-sm quantity" data-id="' . $detail->id . '" value="' . $detail->jumlah . '">';
-            })
-            ->addColumn('subtotal', function ($detail) {
-                return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->subtotal) . '</p>';
-            })
-            ->addColumn('aksi', function ($detail) {
-                return '
-                <div class="btn-group">
-                    <button onclick="deleteData(`' . route('pembelian_detail.destroy', $detail->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
-                </div>
-                ';
-            })
             ->rawColumns(['aksi', 'kode_produk', 'harga_beli', 'jumlah', 'subtotal'])
             ->make(true);
+
+        // return datatables()
+        //     ->of($detail)
+        //     ->addIndexColumn()
+        //     ->addColumn('nama_produk', function ($detail) {
+        //         return $detail->produk['nama_produk'];
+        //     })
+        //     ->addColumn('kode_produk', function ($detail) {
+        //         return '<span class="label label-success">' . $detail->produk['kode_produk'] . '</span>';
+        //     })
+        //     ->addColumn('harga_beli', function ($detail) {
+        //         return '<p class="text-right">' . 'Rp. ' .  format_uang($detail->harga_beli) . '</p>';
+        //     })
+        //     ->addColumn('jumlah', function ($detail) {
+
+        //         return '<input type="number" class="form-control input-sm quantity" data-id="' . $detail->id . '" value="' . $detail->jumlah . '">';
+        //     })
+        //     ->addColumn('subtotal', function ($detail) {
+        //         return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->subtotal) . '</p>';
+        //     })
+        //     ->addColumn('aksi', function ($detail) {
+        //         return '
+        //         <div class="btn-group">
+        //             <button onclick="deleteData(`' . route('pembelian_detail.destroy', $detail->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
+        //         </div>
+        //         ';
+        //     })
+        //     ->rawColumns(['aksi', 'kode_produk', 'harga_beli', 'jumlah', 'subtotal'])
+        //     ->make(true);
     }
 
     public function store(Request $request)
@@ -122,5 +145,22 @@ class PembelianDetailController extends Controller
         $detail->delete();
 
         return response(null, 204);
+    }
+
+    public function loadForm($diskon, $total)
+    {
+        // dd($diskon, $total);
+
+        // hitung bayar dengan diskon
+        $bayar = $total - ($diskon / 100 * $total);
+        $data  = [
+            'totalrp' => format_uang($total),
+            'bayar' => $bayar,
+            'bayarrp' => format_uang($bayar),
+            'terbilang' => ucwords(terbilang($bayar) . 'Rupiah')
+            //note : ucwords di buat untuk membuat huruf terbilang pertama menjadi kapital
+        ];
+
+        return response()->json($data);
     }
 }

@@ -84,7 +84,7 @@
                             <div class="form-group row">
                                 <label for="diskon" class="col-lg-2 control-label">DISKON</label>
                                 <div class="col-lg-8">
-                                    <input type="text" name="diskon" id="diskon" class="form-control">
+                                    <input type="text" name="diskon" id="diskon" class="form-control" value="0">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -132,7 +132,11 @@
             ],
             dom: 'Brt',
             bSort: false,
-        });
+        })
+        .on('draw.dt', function(){
+            loadForm($('#diskon').val()); 
+        })
+        ;
 
         //ini untuk data tabel produk
         table2 = $('table-produk').DataTable()
@@ -229,6 +233,23 @@
                     return;
                 });
         }
+    }
+
+    function loadForm(diskon = 0){
+        $('#total').val($('.total').text());
+        $('#total_item').val($('.total_item').text());
+
+        $.get(`{{ url('/pembelian_detail/loadform') }}/${diskon}/${$('.total').text()}`)
+            .done(response => {
+                $('#totalrp').val('Rp. '+ response.totalrp);
+                $('#bayar').val(response.bayar);
+                $('.tampil-bayar').text('Rp. '+ response.bayarrp);
+                $('.tampil-terbilang').text('Rp. '+ response.terbilang);
+            })
+            .fail(errors => {
+                alert('Tidak dapat menampilkan data');
+                return;
+            })
     }
 </script>
 
