@@ -78,19 +78,19 @@
                             <div class="form-group row">
                                 <label for="totalrp" class="col-lg-2 control-label">TOTAL</label>
                                 <div class="col-lg-8">
-                                    <input type="text" name="totalrp" id="totalrp" class="form-control" readonly>
+                                    <input type="text" id="totalrp" class="form-control" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="diskon" class="col-lg-2 control-label">DISKON</label>
+                                <label for="diskon" class="col-lg-2 control-label">DISKON <i class="fa fa-percent"></i></label>
                                 <div class="col-lg-8">
-                                    <input type="text" name="diskon" id="diskon" class="form-control" value="0">
+                                    <input type="number" name="diskon" id="diskon" class="form-control" value="0">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="bayar" class="col-lg-2 control-label">BAYAR</label>
                                 <div class="col-lg-8">
-                                    <input type="text" name="bayar" id="bayar" class="form-control">
+                                    <input type="text" id="bayarrp" class="form-control">
                                 </div>
                             </div>
                         </form>
@@ -141,6 +141,7 @@
         //ini untuk data tabel produk
         table2 = $('table-produk').DataTable()
 
+        // jumlah * harga beli
         $(document).on('input', '.quantity', function () {
             // console.log($(this).val());
             
@@ -174,6 +175,28 @@
                     return;
                 });
         });
+
+        // hitung diskon
+        $(document).on('input', '#diskon', function(){
+            let diskon = parseInt($(this).val())
+
+            if(diskon > 100) {
+                alert('Diskon tidak boleh melebihi 100%');
+                $(this).val(100);
+                return;
+            }
+            if ($(this).val() == ""){
+                $(this).val(0).select();
+            }
+
+            loadForm($(this).val())
+        });
+
+        // aksi simpan transaksi
+        $('.btn-simpan').on('click', function (){
+            $('.form-pembelian').submit();
+        });
+
 
         // $('#modal-form').validator().on('submit', function (e) {
         //     if (! e.preventDefault()) {
@@ -242,6 +265,7 @@
         $.get(`{{ url('/pembelian_detail/loadform') }}/${diskon}/${$('.total').text()}`)
             .done(response => {
                 $('#totalrp').val('Rp. '+ response.totalrp);
+                $('#bayarrp').val('Rp. '+ response.bayarrp);
                 $('#bayar').val(response.bayar);
                 $('.tampil-bayar').text('Rp. '+ response.bayarrp);
                 $('.tampil-terbilang').text('Rp. '+ response.terbilang);
