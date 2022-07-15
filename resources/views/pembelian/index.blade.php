@@ -21,7 +21,7 @@
                 @endempty
             </div>
             <div class="box-body table-responsive">
-                <table class="table table-stiped table-bordered">
+                <table class="table table-stiped table-bordered table-pembelian">
                     <thead class="header_table">
                         <th class="text-center" width="5%">NO</th>
                         <th class="text-center" width="15%">TANGAL</th>
@@ -42,14 +42,16 @@
 </div>
 
 @includeIf('pembelian.supplier')
+@includeIf('pembelian.detail')
 @endsection
 
 @push('scripts')
 <script>
-    let table;
+    let table, table1;
 
     $(function () {
-        table = $('.table').DataTable({
+    //untuk menampilkan pembelian di view pembelian 
+        table = $('.table-pembelian').DataTable({
             responsive: true,
             processing: true,
             serverSide: true,
@@ -68,26 +70,41 @@
                 {data: 'aksi', searchable: false, sortable: false},
             ]
         });
+    // end
 
-        // $('#modal-form').validator().on('submit', function (e) {
-        //     if (! e.preventDefault()) {
-        //         $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
-        //             .done((response) => {
-        //                 $('#modal-form').modal('hide');
-        //                 table.ajax.reload();
-        //             })
-        //             .fail((errors) => {
-        //                 alert('Tidak dapat menyimpan data');
-        //                 return;
-        //             });
-        //     }
-        // });
+    // untuk menampilkan view di detail pembelian by id
+        $('.table-supplier').DataTable();
+        table1 = $('.table-detail').DataTable({
+            processing: true,
+            bSort: false,
+            dom: 'Brt',
+                columns:[
+                {data: 'DT_RowIndex', searchable: false, sortable: false},
+                {data: 'kode_produk'},
+                {data: 'nama_produk'},
+                {data: 'harga_beli'},
+                {data: 'jumlah'},  
+                {data: 'subtotal'},  
+                ]
+            });
+    // end
     });
-
+// menampilkan modal pilih supplier
     function addForm() {
         $('#modal-supplier').modal('show');
         $('#modal-supplier .modal-title').text('Daftar Supplier');
     }
+// end 
+
+// menampilkan detail produk pembelian
+    function showDetail(url){
+        $('#modal-detail').modal('show');
+        
+        table1.ajax.url(url);
+        table1.ajax.reload();
+    }
+// end
+
 
     function editForm() {
         $('#modal-form').modal('show');

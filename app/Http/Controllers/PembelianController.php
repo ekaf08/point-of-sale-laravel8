@@ -7,7 +7,7 @@ use App\Models\Produk;
 use App\Models\PembelianDetail;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
-use Sabberworm\CSS\Property\Selector;
+
 
 class PembelianController extends Controller
 {
@@ -55,8 +55,8 @@ class PembelianController extends Controller
             ->addColumn('aksi', function ($pembelian) {
                 return '
                     <div class="">
-                        <button onclick="detail(`' . route('pembelian.show', $pembelian->id) . '`)" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-eye"></i></button>
-                        <button onclick="deleteData(`' . route('pembelian_detail.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                        <button onclick="showDetail(`' . route('pembelian.show', $pembelian->id) . '`)" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-eye"></i></button>
+                        <button onclick="deleteData(`' . route('pembelian.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                     </div>
                 ';
             })
@@ -123,7 +123,52 @@ class PembelianController extends Controller
      */
     public function show($id)
     {
-        //
+        $detail = PembelianDetail::leftJoin('produk', 'produk.id', 'detail_pembelian.id_produk')
+            ->select('detail_pembelian.*', 'produk.*')
+            ->where('detail_pembelian.id_pembelian', $id)
+            ->get();
+
+        // menggunakan eloquent
+        // $detail = PembelianDetail::with('produk')
+        //     ->where('id_pembelian', $id)->get();
+
+        // $detail = PembelianDetail::where('id_pembelian', $id)->get();
+
+        // return $detail;
+
+        return datatables()
+            ->of($detail)
+            ->addIndexColumn()
+            // ->addColumn('created_at', function ($detail) {
+            //     return tanggal_indonesia($detail->created_at);
+            // })
+            ->addColumn('kode_produk', function ($detail) {
+                return '<span class="label label-success">' . $detail->kode_produk . '</span>';
+            })
+            ->addColumn('nama_produk', function ($detail) {
+                return $detail->nama_produk;
+            })
+            ->addColumn('harga_beli', function ($detail) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->harga_beli) . '</p>';
+            })
+            ->addColumn('jumlah', function ($detail) {
+                return ' <p class="text-right">' . format_uang($detail->jumlah) . '</p>';
+            })
+            ->addColumn('subtotal', function ($detail) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->subtotal) . '</p>';
+            })
+            // ->addColumn('aksi', function ($detail) {
+            //     return '
+            //         <div class="">
+            //             <button onclick="showDetail(`' . route('detail.show', $pembelian->id) . '`)" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-eye"></i></button>
+            //             <button onclick="deleteData(`' . route('pembelian_detail.destroy', $pembelian->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+            //         </div>
+            //     ';
+            // })
+            ->rawColumns(['kode_produk', 'harga_beli', 'jumlah', 'subtotal'])
+            ->make(true);
+
+        // return $detail;
     }
 
     /**
@@ -157,6 +202,30 @@ class PembelianController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pembelian = Pembelian::find($id);
+
+        // hapus tabel detail_pembelian by id pembelian
+        $detail    = PembelianDetail::where('id_pembelian', $pembelian->id)->get();
+
+        // return $detail;
+
+        // $detail    = PembelianDetail::leftJoin('pembelian', 'pembelian.id', 'detail_pembelian.id_pembelian')
+        //     ->select('detail_pembelian.*', 'pembelian.*')
+        //     ->where('detail_pembelian.id_pembelian', $id)
+        //     ->get();
+        foreach ($detail as $item) {
+            // mengurangi stok tabel produk by id pembelian
+            $produk = Produk::find($item->id_produk);
+            if ($produk) {
+                $produk->stok -= $item->jumlah;
+                $produk->update();
+            }
+            $item->delete();
+        }
+
+        // hapus tabel pembelian
+        $pembelian->delete();
+
+        return response(null, 204);
     }
 }

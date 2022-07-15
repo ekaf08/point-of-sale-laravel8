@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\setting;
-use PDF;
+use Barryvdh\DomPDF\PDF;
+// use PDF;
 
 class MemberController extends Controller
 {
@@ -34,7 +35,7 @@ class MemberController extends Controller
             })
             ->addColumn('aksi', function ($member) {
                 return '
-                <div class="btn-group">
+                <div class="">
                     <button type="button" onclick="editForm(`' . route('member.update', $member->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil"></i></button>
                     <button type="button" onclick="deleteData(`' . route('member.destroy', $member->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i></button>
                 </div>

@@ -47,7 +47,7 @@
                         </div>
                 </div>
               </form>
-                <table class="table table-stiped table-bordered table-pembelian">
+                <table class="table table-stiped table-bordered table-pembelian-detail">
                     <thead class="header_table">
                         <th class="text-center" width="5%">NO</th>
                         <th class="text-center" width="15%">KODE</th>
@@ -113,7 +113,7 @@
     let table_ajax, table2;
 
     $(function () {
-        table_ajax = $('.table-pembelian').DataTable({
+        table_ajax = $('.table-pembelian-detail').DataTable({
             responsive: true,
             processing: true,
             serverSide: true,

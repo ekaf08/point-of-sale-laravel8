@@ -27,7 +27,7 @@
     background: #f0f0f0;
 }
 
-.table-pembelian tbody tr:last-child {
+.table-pembelian-detail tbody tr:last-child {
     display: none;
 }
 
