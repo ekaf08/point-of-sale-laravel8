@@ -9,6 +9,8 @@ use App\Http\Controllers\{
     PengeluaranController,
     SupplierController,
     PembelianDetailController,
+    PenjualanController,
+    PenjualanDetailController,
 };
 
 
@@ -64,4 +66,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pembelian_detail/loadform/{diskon}/{total}', [PembelianDetailController::class, 'loadForm'])->name('pembelian_detail.load_form');
     Route::resource('/pembelian_detail', PembelianDetailController::class)
         ->except('create', 'show', 'edit');
+
+    // ----------------Penjualan Detail-------------------------------
+    Route::get('/transaksi/baru', [PenjualanController::class, 'create'])->name('transaksi.baru');
+    Route::resource('/transaksi', PenjualanDetailController::class)
+        ->except('show',);
 });
