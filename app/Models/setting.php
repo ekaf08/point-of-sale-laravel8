@@ -10,6 +10,6 @@ class setting extends Model
     use HasFactory;
 
     protected $table = 'setting';
-    protected $primaryKey = 'id_setting';
+    protected $primaryKey = 'id';
     protected $guarded = [];
 }

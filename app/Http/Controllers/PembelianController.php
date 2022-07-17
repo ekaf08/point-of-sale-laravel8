@@ -25,7 +25,9 @@ class PembelianController extends Controller
 
     public function data()
     {
+        // menggunakan eloquent
         // $pembelian = Pembelian::orderBy('id', 'desc')->get();
+
         $pembelian = Pembelian::leftJoin('supplier', 'supplier.id', 'pembelian.id_supplier')
             ->select('pembelian.*', 'supplier.nama')
             ->orderBy('pembelian.id', 'desc')
@@ -49,8 +51,11 @@ class PembelianController extends Controller
             ->addColumn('total_item', function ($pembelian) {
                 return ' <p class="text-right">' . format_uang($pembelian->total_item) . '</p>';
             })
-            ->addColumn('diskon', function ($pembelian) {
-                return ' <p class="text-right">' . ($pembelian->diskon) . '</p>';
+            // ->addColumn('diskon', function ($pembelian) {
+            //     return ' <p class="text-right">' . ($pembelian->diskon) . '</p>';
+            // })
+            ->editColumn('diskon', function ($pembelian) {
+                return ' <p class="text-right">' . ($pembelian->diskon) .  ' % </p>';
             })
             ->addColumn('aksi', function ($pembelian) {
                 return '

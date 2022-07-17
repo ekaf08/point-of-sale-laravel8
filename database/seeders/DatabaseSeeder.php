@@ -14,8 +14,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+
+        // $this->call([
+        //     UserTableSeeder::class,
+        // ]);
+
         $this->call([
-            UserTableSeeder::class,
+            SettingTableSeeder::class
         ]);
     }
 }
+
+// php artisan db:seed --class=SettingTableSeeder -> untuk menjalankan class 1 seeder

@@ -59,16 +59,19 @@
                         <i class="fa fa-money"></i> <span>Pengeluaran</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-upload"></i> <span>Transaksi Penjualan</span>
-                    </a>
-                </li>
+
                 <li>
                     <a href="{{ route('pembelian.index') }}">
                         <i class="fa fa-download"></i> <span>Transaksi Pembelian</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="#">
+                        <i class="fa fa-upload"></i> <span>Transaksi Penjualan</span>
+                    </a>
+                </li>
+              
                 <li>
                     <a href="#">
                         <i class="fa fa-cart-arrow-down"></i> <span>Transaksi Lama</span>

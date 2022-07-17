@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\setting;
-use Barryvdh\DomPDF\PDF;
-// use PDF;
+// use Barryvdh\DomPDF\PDF;
+use PDF;
 
 class MemberController extends Controller
 {
@@ -139,6 +139,7 @@ class MemberController extends Controller
         $datamember = $datamember->chunk(2);
         $setting    = Setting::first();
 
+        // return $setting;
         // dd($datamember);
 
         $no = 1;

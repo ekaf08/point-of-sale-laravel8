@@ -21,12 +21,14 @@ class PembelianDetailController extends Controller
         $produk = Produk::orderBy('nama_produk')->get();
         // return $produk;
         $supplier = Supplier::find(session('id_supplier'));
+        $diskon = Pembelian::find($id_pembelian)->diskon ?? 0; //mencari kolom nilai diskon di tabel pembelian, apabila diskon null maka akan di default noll (0)
+        // return $diskon;
 
         // return session('id_supplier');
         if (!$supplier) {
             abort(404);
         }
-        return view('pembelian_detail.index', compact('id_pembelian', 'produk', 'supplier'));
+        return view('pembelian_detail.index', compact('id_pembelian', 'produk', 'supplier', 'diskon'));
     }
 
     public function data($id)

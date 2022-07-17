@@ -78,23 +78,26 @@ class ProdukController extends Controller
                 return '<span class="label label-success">' . $produk->kode_produk . '</span>';
             })
             ->addColumn('harga_beli', function ($produk) {
-                return format_uang($produk->harga_beli);
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($produk->harga_beli) . '</p>';
             })
             ->addColumn('harga_jual', function ($produk) {
-                return format_uang($produk->harga_jual);
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($produk->harga_jual) . '</p>';
             })
             ->addColumn('stok', function ($produk) {
-                return format_uang($produk->stok);
+                return ' <p class="text-right">'  .  format_uang($produk->stok) . '</p>';
+            })
+            ->addColumn('diskon', function ($produk) {
+                return ' <p class="text-right">'  .  format_uang($produk->diskon) . '</p>';
             })
             ->addColumn('aksi', function ($produk) {
                 return '
-                <div class="btn-group">
+                <div class="">
                     <button type="button" onclick="editForm(`' . route('produk.update', $produk->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil" ></i> </button>
                     <button type="button" onclick="deleteData(`' . route('produk.destroy', $produk->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> </button>
                 </div>
                 ';
             })
-            ->rawColumns(['aksi', 'kode_produk', 'select_all'])
+            ->rawColumns(['aksi', 'kode_produk', 'select_all', 'harga_beli', 'harga_jual', 'stok', 'diskon'])
             ->make(true);
     }
 
