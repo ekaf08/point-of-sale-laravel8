@@ -19,9 +19,20 @@ class PenjualanDetailController extends Controller
     {
         $produk  = Produk::orderBy('nama_produk')->get();
         $member  = Member::orderBy('nama')->get();
-        $setting = Setting::all();
+        // $setting = Setting::all();
+        $setting = Setting::first();
+        // dd($produk, $member, $setting);
 
-        dd($produk, $member, $setting);
+        // cek apakah ada transaksi yang sedang berjalan
+        if ($id_penjualan = session('id')) {
+            return view('penjualan_detail.index', compact('produk', 'member', 'setting', 'id_penjualan'));
+        } else {
+            if (auth()->user()->level == 1) {
+                return redirect()->route('transaksi.baru');
+            } else {
+                return redirect()->route('home');
+            }
+        }
     }
 
     /**

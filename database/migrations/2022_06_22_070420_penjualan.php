@@ -15,7 +15,7 @@ class Penjualan extends Migration
     {
         Schema::create('penjualan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_penjualan');
+            // $table->integer('id_penjualan');
             $table->integer('id_member');
             $table->integer('id_user');
             $table->integer('total_item');

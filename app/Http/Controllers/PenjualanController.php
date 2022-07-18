@@ -29,7 +29,13 @@ class PenjualanController extends Controller
         $penjualan->total_item = 0;
         $penjualan->total_harga = 0;
         $penjualan->diskon = 0;
+        $penjualan->bayar = 0;
         $penjualan->diterima = 0;
+        $penjualan->id_user = auth()->id();
+        $penjualan->save();
+
+        session(['id' => $penjualan->id]);
+        return redirect()->route('transaksi.index');
     }
 
     /**
