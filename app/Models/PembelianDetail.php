@@ -17,4 +17,9 @@ class PembelianDetail extends Model
     {
         return $this->hasOne(Produk::class, 'id', 'id_produk');
     }
+
+    public function member()
+    {
+        return $this->hasOne(Member::class, 'id', 'id_member');
+    }
 }

@@ -34,7 +34,7 @@
               <form class="form-produk">
                 @csrf
                 <div class="form-group row">
-                    <label for="kode_produk" class="col-lg-1" style="font-size: 18px; font-weight: bold;">KODE PRODUK : </label>
+                    <label for="kode_produk" class="col-lg-1" style="font-weight: bold;">KODE PRODUK  </label>
                         <div class="col-lg-5">
                             <div class="input-group">
                                 <input type="hidden" name="id_pembelian" id="id_pembelian" value="{{ $id_pembelian }}">
