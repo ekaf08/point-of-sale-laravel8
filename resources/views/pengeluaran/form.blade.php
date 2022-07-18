@@ -1,7 +1,7 @@
   <!-- Modal -->
   <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form">
-    <div class="modal-dialog" role="document">
-        <form action="" method="POST" class="form-horizontal">
+    <div class="modal-dialog modal-lg" style="width: 80%" role="document">
+           <form action="" method="POST" class="form-horizontal">
             @csrf
             @method('post')
             <div class="modal-content">

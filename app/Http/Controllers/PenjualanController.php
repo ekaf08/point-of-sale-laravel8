@@ -25,6 +25,7 @@ class PenjualanController extends Controller
     public function create()
     {
         $penjualan = new Penjualan();
+
         $penjualan->id_member = null;
         $penjualan->total_item = 0;
         $penjualan->total_harga = 0;
