@@ -53,7 +53,7 @@
                         <div class="tampil-terbilang"></div>
                     </div>
                     <div class="col-lg-4">
-                        <form action="{{ route('transaksi.store') }}" class="form-pembelian" method="POST">
+                        <form action="{{ route('transaksi.simpan') }}" class="form-penjualan" method="POST">
                             @csrf
                             <input type="hidden" name="id_penjualan" value="{{ $id_penjualan }}">
                             <input type="hidden" name="total" id="total">
@@ -93,7 +93,7 @@
                             <div class="form-group row">
                                 <label for="diterima" class="col-lg-2 control-label">DITERIMA</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="diterima" name="diterima" class="form-control" value="0">
+                                    <input type="number" id="diterima" name="diterima" class="form-control" value="0">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -147,6 +147,7 @@
         })
         .on('draw.dt', function(){
             loadForm($('#diskon').val()); 
+            
         })
         ;
 
@@ -172,14 +173,16 @@
                 return;
             }
 
-            $.post(`{{ url('/penjualan_detail') }}/${id}`,{
+            // update kolom jumlah di databse
+            $.post(`{{ url('/transaksi') }}/${id}`,{
                 '_token': $('[name=csrf-token]').attr('content'),
                 '_method': 'put',
                 'jumlah':jumlah 
             })
                 .done(response => {
                     $(this).on('mouseout', function(){
-                        table_ajax.ajax.reload();
+                        // table_ajax.ajax.reload();
+                        table_ajax.ajax.reload(() => loadForm($('#diskon').val()));
                     });
                 })
                 .fail(errors => {
@@ -217,7 +220,7 @@
 
         // aksi simpan transaksi
         $('.btn-simpan').on('click', function (){
-            $('.form-pembelian').submit();
+            $('.form-penjualan').submit();
         });
 
 
@@ -275,7 +278,8 @@
         $.post('{{ route('transaksi.store') }}', $('.form-produk').serialize())
         .done(response => {
             $('#kode_produk').focus();
-            table_ajax.ajax.reload();
+            // table_ajax.ajax.reload();
+            table_ajax.ajax.reload(() => loadForm($('#diskon').val()));
         })
         .fail(errors => {
             alert('Tidak dapat menyimpan data');
@@ -290,7 +294,8 @@
                     '_method': 'delete'
                 })
                 .done((response) => {
-                    table_ajax.ajax.reload();
+                    // table_ajax.ajax.reload();
+                    table_ajax.ajax.reload(() => loadForm($('#diskon').val()));
                 })
                 .fail((errors) => {
                     alert('Tidak dapat menghapus data');

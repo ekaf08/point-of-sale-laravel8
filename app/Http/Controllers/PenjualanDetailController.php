@@ -190,7 +190,10 @@ class PenjualanDetailController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $detail = PenjualanDetail::find($id);
+        $detail->jumlah = $request->jumlah;
+        $detail->subtotal = $detail->harga_jual * $request->jumlah;
+        $detail->update();
     }
 
     /**
@@ -201,7 +204,10 @@ class PenjualanDetailController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $detail = PenjualanDetail::find($id);
+        $detail->delete();
+
+        return response(null, 204);
     }
 
     public function loadForm($diskon = 0, $total, $diterima)
