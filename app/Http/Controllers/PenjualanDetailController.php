@@ -21,12 +21,12 @@ class PenjualanDetailController extends Controller
         $produk  = Produk::orderBy('nama_produk')->get();
         $member  = Member::orderBy('nama')->get();
         // $setting = Setting::all();
-        $setting = Setting::first();
-        // dd($produk, $member, $setting);
+        $diskon = Setting::first()->diskon ?? 0;
+        // dd($produk, $member, $diskon);
 
         // cek apakah ada transaksi yang sedang berjalan
         if ($id_penjualan = session('id')) {
-            return view('penjualan_detail.index', compact('produk', 'member', 'setting', 'id_penjualan'));
+            return view('penjualan_detail.index', compact('produk', 'member', 'diskon', 'id_penjualan'));
         } else {
             if (auth()->user()->level == 1) {
                 return redirect()->route('transaksi.baru');
@@ -214,7 +214,8 @@ class PenjualanDetailController extends Controller
             'bayar' => $bayar,
             'bayarrp' => format_uang($bayar),
             'terbilang' => ucwords(terbilang($bayar) . 'Rupiah'),
-            'kembalirp' => format_uang($kembali)
+            'kembalirp' => format_uang($kembali),
+            'kembali_terbilang' => ucwords(terbilang($kembali) . 'Rupiah')
             //note : ucwords di buat untuk membuat huruf terbilang pertama menjadi kapital
         ];
 

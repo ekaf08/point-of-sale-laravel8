@@ -59,11 +59,23 @@
                             <input type="hidden" name="total" id="total">
                             <input type="hidden" name="total_item" id="total_item">
                             <input type="hidden" name="bayar" id="bayar">
+                            <input type="hidden" name="id_member" id="id_member">
                             
                             <div class="form-group row">
                                 <label for="totalrp" class="col-lg-2 control-label">TOTAL</label>
                                 <div class="col-lg-8">
                                     <input type="text" id="totalrp" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">      
+                                <label for="kode_member" class="col-lg-2 control-label">MEMBER</label>
+                                <div class="col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="kode_member" id="kode_member">
+                                        <span class="input-group-btn">
+                                            <button onclick="tampilMember()" type="button" class="btn btn-info btn-flat"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>  
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -75,7 +87,19 @@
                             <div class="form-group row">
                                 <label for="bayar" class="col-lg-2 control-label">BAYAR</label>
                                 <div class="col-lg-8">
-                                    <input type="text" id="bayarrp" class="form-control">
+                                    <input type="text" id="bayarrp" class="form-control" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="diterima" class="col-lg-2 control-label">DITERIMA</label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="diterima" name="diterima" class="form-control" value="0">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="kembali" class="col-lg-2 control-label">KEMBALI</label>
+                                <div class="col-lg-8">
+                                    <input type="text" id="kembali" name="kembali" class="form-control" value="0" readonly>
                                 </div>
                             </div>
                         </form>
@@ -180,6 +204,17 @@
             loadForm($(this).val())
         });
 
+        // hitung diterima - bayar
+        $('#diterima').on('input', function() {
+            if ($(this).val() == "") {
+                $(this).val(0).select();
+            }
+
+        loadForm($('#diskon').val(), $(this).val());
+        }).focus(function (){
+            $(this).select();
+        });
+
         // aksi simpan transaksi
         $('.btn-simpan').on('click', function (){
             $('.form-pembelian').submit();
@@ -214,13 +249,26 @@
     function hideProduk() {
         $('#modal-produk').modal('hide');
     }
+    function hideMember() {
+        $('#modal-member').modal('hide');
+    }
 
-    //fungsi untuk menambah data pada tabel detail pembelian
+    //fungsi untuk menambah data pada tabel detail penjualan
     function pilihProduk(id,kode){
         $('#id_produk').val(id);
         $('#kode_produk').val(kode);
         hideProduk();
         tambahProduk();
+    }
+
+    function pilihMember(id,kode_member){
+        $('#id_member').val(id);
+        $('#kode_member').val(kode_member);
+        $('#diskon').val('{{ $diskon }}'); //ambil diskon dari PenjualandetailController
+        loadForm($('#diskon').val());
+        $('#diterima').val(0).focus().select();
+        hideMember();
+        // tambahProduk();
     }
 
     function tambahProduk() {
@@ -251,17 +299,23 @@
         }
     }
 
-    function loadForm(diskon = 0){
+    function loadForm(diskon = 0, diterima = 0){
         $('#total').val($('.total').text());
         $('#total_item').val($('.total_item').text());
 
-        $.get(`{{ url('/transaksi/loadform') }}/${diskon}/${$('.total').text()}/${0}`)
+        $.get(`{{ url('/transaksi/loadform') }}/${diskon}/${$('.total').text()}/${diterima}`)
             .done(response => {
                 $('#totalrp').val('Rp. '+ response.totalrp);
                 $('#bayarrp').val('Rp. '+ response.bayarrp);
-                $('#bayar').val(response.bayar);
-                $('.tampil-bayar').text('Rp. '+ response.bayarrp);
-                $('.tampil-terbilang').text('Rp. '+ response.terbilang);
+                $('#bayar').val(response.bayar);              
+                $('.tampil-bayar').text('Bayar: Rp. '+ response.bayarrp);
+                $('.tampil-terbilang').text(response.terbilang);
+
+                $('#kembali').val('Rp.'+ response.kembalirp);
+                    if ($('#diterima').val() != 0) {
+                        $('.tampil-bayar').text('kembali Rp. '+ response.kembalirp);
+                        $('.tampil-terbilang').text(response.kembali_terbilang);
+                    }
             })
             .fail(errors => {
                 alert('Tidak dapat menampilkan data');

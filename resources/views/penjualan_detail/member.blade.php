@@ -1,5 +1,5 @@
   <!-- Modal -->
-  <div class="modal fade" id="modal-Member" tabindex="-1" role="dialog" aria-labelledby="modal-Member" >
+  <div class="modal fade" id="modal-member" tabindex="-1" role="dialog" aria-labelledby="modal-member" >
     <div class="modal-dialog modal-lg" style="width: 80%" role="document">
        
             <div class="modal-content">
@@ -9,7 +9,7 @@
                 </div>
 		<!--ISI MODAL-->
                 <div class="modal-body">
-                    <table class="table table-striped table-bordered table-Member">
+                    <table class="table table-striped table-bordered table-member">
                         <thead class="header_table">
                             <th class="text-center" width="5%">NO</th>
                             <th class="text-center">NAMA</th>
@@ -25,7 +25,7 @@
                                     <td>{{ $item->telepon }}</td>
                                     <td>{{ $item->alamat }}</td>      
                                     <td>
-                                        <a href="{{ route('pembelian.create', $item->id) }}" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-check-circle"></i> Pilih</a>
+                                      <a href="#" class="btn btn-primary btn-xs btn-flat" onclick="pilihMember('{{ $item->id }}', '{{ $item->kode_member }}')"><i class="fa fa-check-circle"></i> Pilih</a>
                                     </td>
                                 </tr>                          
                             @endforeach

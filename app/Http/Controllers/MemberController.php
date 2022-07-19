@@ -64,7 +64,7 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         $member = Member::latest()->first() ?? new Member();
-        $kode_member = (int) $member->kode_member + 1;
+        $kode_member = (int) $member->id + 1;
 
         // dd($kode_member);
 
