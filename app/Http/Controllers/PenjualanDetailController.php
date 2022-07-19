@@ -62,7 +62,7 @@ class PenjualanDetailController extends Controller
             $row['harga_jual']  = '<p class="text-right">' . 'Rp. ' .  format_uang($item->harga_jual) . '</p>';
             $row['jumlah']      = '<input type="number" class="form-control input-sm quantity" data-id="' . $item->id . '" value="' . $item->jumlah . '">';
             $row['subtotal']    = ' <p class="text-right">' . 'Rp. ' .  format_uang($item->subtotal) . '</p>';
-            $row['diskon']    = ' <p class="text-right">' . ($item->diskon) . '% </p>';
+            $row['diskon']      = ' <p class="text-right">' . ($item->diskon) . '% </p>';
             $row['aksi']        = '<div class="btn-group">
                                         <button onclick="deleteData(`' . route('transaksi.destroy', $item->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> Hapus</button>
                                     </div>';
@@ -78,7 +78,7 @@ class PenjualanDetailController extends Controller
                             <div class = "total_item hide">' . $total_item . '</div>
                             ',
             'nama_produk' => '',
-            'harga_beli' => '',
+            'harga_jual' => '',
             'jumlah' => '',
             'diskon' => '',
             'subtotal' => '',
@@ -90,7 +90,7 @@ class PenjualanDetailController extends Controller
         return datatables()
             ->of($data)
             ->addIndexColumn()
-            ->rawColumns(['aksi', 'kode_produk', 'harga_beli', 'jumlah', 'subtotal'])
+            ->rawColumns(['aksi', 'kode_produk', 'harga_jual', 'jumlah', 'diskon', 'subtotal'])
             ->make(true);
 
         // return datatables()
@@ -141,7 +141,22 @@ class PenjualanDetailController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $produk = Produk::where('id', $request->id_produk)->first();
+        if (!$produk) {
+            // cek apakah produk 0 atau tidak
+            return response()->json('Data Gagal Disimpan', 400);
+        }
+        $detail = new PenjualanDetail();
+        $detail->id_penjualan = $request->id_penjualan;
+        $detail->id_produk = $request->id_produk;
+        $detail->harga_jual = $produk->harga_jual;
+        $detail->jumlah = 1;
+        $detail->diskon = 0;
+        $detail->subtotal = $produk->harga_jual;
+
+        $detail->save();
+
+        return response()->json('Data berhasil disimpan', 200);
     }
 
     /**
@@ -189,14 +204,17 @@ class PenjualanDetailController extends Controller
         //
     }
 
-    public function loadForm($diskon, $total, $diterima)
+    public function loadForm($diskon = 0, $total, $diterima)
     {
-        $bayar = $total - ($diskon / 100 * $total);
-        $data  = [
+        $bayar   = $total - ($diskon / 100 * $total);
+        $kembali = ($diterima != 0) ? $diterima - $bayar : 0;
+        //cek diterima = 0 apa tidak, apablia diterima tidak = 0 maka $diterima - $bayar.. apabila belum bayar maka akan di set menjadi 0.
+        $data    = [
             'totalrp' => format_uang($total),
             'bayar' => $bayar,
             'bayarrp' => format_uang($bayar),
-            'terbilang' => ucwords(terbilang($bayar) . 'Rupiah')
+            'terbilang' => ucwords(terbilang($bayar) . 'Rupiah'),
+            'kembalirp' => format_uang($kembali)
             //note : ucwords di buat untuk membuat huruf terbilang pertama menjadi kapital
         ];
 

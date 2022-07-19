@@ -31,7 +31,7 @@
                         </div>
                 </div>
               </form>
-                <table class="table table-stiped table-bordered table-pembelian-detail">
+                <table class="table table-stiped table-bordered table-penjualan-detail">
                     <thead class="header_table">
                         <th class="text-center" width="5%">NO</th>
                         <th class="text-center" width="15%">KODE</th>
