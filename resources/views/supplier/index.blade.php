@@ -62,14 +62,25 @@
         $('#modal-form').validator().on('submit', function (e) {
             if (! e.preventDefault()) {
                 $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
-                    .done((response) => {
-                        $('#modal-form').modal('hide');
-                        table.ajax.reload();
-                    })
-                    .fail((errors) => {
-                        alert('Tidak dapat menyimpan data');
-                        return;
-                    });
+                .done((response) => {
+                Swal.fire({
+                    // position : 'top-end',
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Supplier Berhasil Ditambahkan',
+                    // footer: '<a href="">Why do I have this issue?</a>'
+                  })
+                $('#modal-form').modal('hide');
+                table.ajax.reload();
+              })
+              .fail((errors) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Kategori Sudah Ada !!',
+                  })
+                return;
+              });
             }
         });
     });
@@ -106,19 +117,39 @@
     }
 
     function deleteData(url) {
-        if (confirm('Yakin ingin menghapus data terpilih?')) {
-            $.post(url, {
-                    '_token': $('[name=csrf-token]').attr('content'),
-                    '_method': 'delete'
-                })
-                .done((response) => {
-                    table.ajax.reload();
-                })
-                .fail((errors) => {
-                    alert('Tidak dapat menghapus data');
-                    return;
-                });
+      Swal.fire({
+        title: 'Yakin ?',
+        text: "Menghapus Data Ini !!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post(url, {
+            '_token': $('[name=csrf-token]').attr('content'),
+            '_method': 'delete'
+          })
+          .done((response)=> {
+            Swal.fire(
+            'Berhasil',
+            'Data Anda Telah Di Hapus',
+            'success'
+          )
+            table.ajax.reload();
+          })
+          .fail((errors) => {
+            Swal.fire(
+            'Oops',
+            'Data Gagal Di Hapus',
+            'error'
+          )
+              return;
+            })
         }
+      })
     }
 </script>
 

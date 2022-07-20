@@ -56,6 +56,7 @@
     let table;
 
     $(function(){
+        $('body').addClass('sidebar-collapse');
         table = $('.table').DataTable({
             processing: true,
             autoWidth: false,
@@ -84,8 +85,8 @@
                         Swal.fire({
                         // position : 'top-end',
                         icon: 'success',
-                        title: 'Produk Berhasil Disimpan',
-                        // text: 'Something went wrong!',
+                        title: 'Berhasil',
+                        text: 'Produk Berhasil Ditambahkan',
                         // footer: '<a href="">Why do I have this issue?</a>'
                     })
                         $('#modal-form').modal('hide');
@@ -145,39 +146,101 @@
     }
 
     function deleteData(url) {
-        if (confirm('Yakin menghapus data ini ?')){
-            $.post(url, {
-                '_token': $('[name=csrf-token]').attr('content'),
-                '_method': 'delete'
+      Swal.fire({
+        title: 'Yakin ?',
+        text: "Menghapus Data Ini !!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post(url, {
+            '_token': $('[name=csrf-token]').attr('content'),
+            '_method': 'delete'
+          })
+          .done((response)=> {
+            Swal.fire(
+            'Berhasil',
+            'Data Anda Telah Di Hapus',
+            'success'
+          )
+            table.ajax.reload();
+          })
+          .fail((errors) => {
+            Swal.fire(
+            'Oops',
+            'Data Gagal Di Hapus',
+            'error'
+          )
+              return;
             })
-            .done((response) => {
-                table.ajax.reload();
-            })
-            .fail((errors) => {
-                alert('Tidak dapat menghapus data');
-                return;
-            });
         }
+      })
     }
 
 
     function deleteSelected(url){
-        if ($('input:checked').length > 1) {
-         if (confirm('Yakin menghapus data yang di pilih ?')){
-            $.post(url, $('.form-produk').serialize())
-            .done((response) => {
-                table.ajax.reload();
-            })
-            .fail((errors) => {
-                alert('Gagal menghapus data');
+        Swal.fire({
+        title: 'Yakin ?',
+        text: "Menghapus Data Ini !!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+        }).then((result) => {
+            if ($('input:checked').length > 1) {
+                if (result.isConfirmed){
+                    $.post(url, $('.form-produk').serialize())
+                    .done((response)=> {
+                    Swal.fire(
+                    'Berhasil',
+                    'Data Anda Telah Di Hapus',
+                    'success'
+                )
+                    table.ajax.reload();
+                })
+                .fail((errors) => {
+                    Swal.fire(
+                    'Oops',
+                    'Data Gagal Di Hapus',
+                    'error'
+                )
+                    return;
+                    })
+                }
+            } else {
+                Swal.fire(
+                'Oops',
+                'Pilih Data Yang Di Hapus!!',
+                'error'
+            )
                 return;
-            });
-         }
-        } else {
-            alert('Pilih data yang akan di hapus');
-            return;
-        }
-        }
+            }
+        })
+    }
+
+    // function deleteSelected(url){
+    //     if ($('input:checked').length > 1) {
+    //      if (confirm('Yakin menghapus data yang di pilih ?')){
+    //         $.post(url, $('.form-produk').serialize())
+    //         .done((response) => {
+    //             table.ajax.reload();
+    //         })
+    //         .fail((errors) => {
+    //             alert('Gagal menghapus data');
+    //             return;
+    //         });
+    //      }
+    //     } else {
+    //         alert('Pilih data yang akan di hapus');
+    //         return;
+    //     }
+    // }
         
     function cetakBarcode(url){
         if ($('input:checked').length < 1){
@@ -193,6 +256,7 @@
                 .submit();
         }
     }
+    
 </script>
 
 <script type="text/javascript" language="javascript">

@@ -61,8 +61,8 @@
                 Swal.fire({
                     // position : 'top-end',
                     icon: 'success',
-                    title: 'Kategori Berhasil Disimpan',
-                    // text: 'Something went wrong!',
+                    title: 'Berhasil',
+                    text: 'Kategori Berhasil Ditambahkan',
                     // footer: '<a href="">Why do I have this issue?</a>'
                   })
                 $('#modal-form').modal('hide');
@@ -109,48 +109,44 @@
           })
       }
 
-    //  function deleteData(url){
-    //   Swal.fire({
-    //         title: 'Are you sure?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, delete it!'
-    //       }).then((result) => {
-    //         if (result.isConfirmed) {
-    //           Swal.fire(
-    //             $.post(url, {
-    //             '_token': $('[name=csrf-token]').attr('content'),
-    //             '_method': 'delete',
-    //             'Deleted!',
-    //             'Your file has been deleted.',
-    //             'success',
-    //             })
-    //             .done((response)=> {
-    //               table.ajax.reload();
-    //             })
-    //             .fail((errors) => {
-    //               Swal.fire({
-    //                 icon: 'error',
-    //                 title: 'Oops...',
-    //                 text: 'Gagal Menghapus Data !!'
-    //                 return;
-    //               })
-    //         })
-    //           )
-    //         }
-    //       })
-    //  }
+    function deleteData(url) {
+      Swal.fire({
+        title: 'Yakin ?',
+        text: "Menghapus Data Ini !!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post(url, {
+            '_token': $('[name=csrf-token]').attr('content'),
+            '_method': 'delete'
+          })
+          .done((response)=> {
+            Swal.fire(
+            'Berhasil',
+            'Data Anda Telah Di Hapus',
+            'success'
+          )
+            table.ajax.reload();
+          })
+          .fail((errors) => {
+            Swal.fire(
+            'Oops',
+            'Data Gagal Di Hapus',
+            'error'
+          )
+              return;
+          })
+        }
+      })
+    }
 
       // function deleteData(url) {
-      //   if (result.isConfirmed){
-      //     Swal.fire(
-      //         'Deleted!',
-      //         'Your file has been deleted.',
-      //         'success'
-      //       )
+      //   if (confirm('Yakin menghapus data ?')){
       //       $.post(url, {
       //       '_token': $('[name=csrf-token]').attr('content'),
       //       '_method': 'delete'
@@ -164,22 +160,6 @@
       //       })
       //   }
       // }
-
-      function deleteData(url) {
-        if (confirm('Yakin menghapus data ?')){
-            $.post(url, {
-            '_token': $('[name=csrf-token]').attr('content'),
-            '_method': 'delete'
-          })
-          .done((response)=> {
-            table.ajax.reload();
-          })
-          .fail((errors) => {
-              alert('Tidak dapat menghapus data');
-              return;
-            })
-        }
-      }
     
     </script>
 
