@@ -59,7 +59,7 @@
                             <input type="hidden" name="total" id="total">
                             <input type="hidden" name="total_item" id="total_item">
                             <input type="hidden" name="bayar" id="bayar">
-                            <input type="hidden" name="id_member" id="id_member">
+                            <input type="hidden" name="id_member" id="id_member" value="{{ $memberSelected->id }}">
                             
                             <div class="form-group row">
                                 <label for="totalrp" class="col-lg-2 control-label">TOTAL</label>
@@ -71,7 +71,7 @@
                                 <label for="kode_member" class="col-lg-2 control-label">MEMBER</label>
                                 <div class="col-lg-8">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="kode_member" id="kode_member">
+                                        <input type="text" class="form-control" name="kode_member" id="kode_member" value="{{ $memberSelected->kode_member }}">
                                         <span class="input-group-btn">
                                             <button onclick="tampilMember()" type="button" class="btn btn-info btn-flat"><i class="fa fa-search"></i></button>
                                         </span>
@@ -81,7 +81,8 @@
                             <div class="form-group row">
                                 <label for="diskon" class="col-lg-2 control-label">DISKON</label>
                                 <div class="col-lg-8">
-                                    <input type="number" name="diskon" id="diskon" class="form-control" value="0" readonly>
+                                    {{-- value diskon di laukan pengecekan apakah ada member yang terpilih atau ga ? kalau tidak ada maka akan di set 0 --}}
+                                    <input type="number" name="diskon" id="diskon" class="form-control" value="{{ ! empty($memberSelected) ? $diskon : 0 }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -93,7 +94,7 @@
                             <div class="form-group row">
                                 <label for="diterima" class="col-lg-2 control-label">DITERIMA</label>
                                 <div class="col-lg-8">
-                                    <input type="number" id="diterima" name="diterima" class="form-control" value="0">
+                                    <input type="number" id="diterima" name="diterima" class="form-control" value="{{ ! empty($memberSelected) ? $penjualan->diterima : 0 }}">
                                 </div>
                             </div>
                             <div class="form-group row">

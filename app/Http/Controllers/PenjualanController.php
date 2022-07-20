@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penjualan;
+use App\Models\PenjualanDetail;
 use Illuminate\Http\Request;
+use App\Models\Produk;
 
 class PenjualanController extends Controller
 {
@@ -47,7 +49,28 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // return $request;
+
+        $penjualan = Penjualan::findOrFail($request->id_penjualan);
+        $penjualan->total_item = $request->total_item;
+        $penjualan->total_harga = $request->total;
+        $penjualan->diskon = $request->diskon;
+        $penjualan->bayar = $request->bayar;
+        $penjualan->diterima = $request->diterima;
+        $penjualan->id_member = $request->id_member;
+        $penjualan->update();
+        // return $penjualan;
+
+        // update stok yang ada di tabel produk
+        $detail = PenjualanDetail::where('id_penjualan', $penjualan->id)->get();
+        // dd($detail);
+        // return $detail;
+        foreach ($detail as $item) {
+            $produk = Produk::find($item->id_produk);
+            $produk->stok -= $item->jumlah;
+            $produk->update();
+        }
+        return redirect()->route('produk.index');
     }
 
     /**

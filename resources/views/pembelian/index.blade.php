@@ -50,6 +50,7 @@
     let table, table1;
 
     $(function () {
+        $('body').addClass('sidebar-collapse');
     //untuk menampilkan pembelian di view pembelian 
         table = $('.table-pembelian').DataTable({
             responsive: true,

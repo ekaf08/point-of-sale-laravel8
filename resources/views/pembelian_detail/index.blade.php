@@ -113,6 +113,7 @@
     let table_ajax, table2;
 
     $(function () {
+        $('body').addClass('sidebar-collapse');
         table_ajax = $('.table-pembelian-detail').DataTable({
             responsive: true,
             processing: true,

@@ -26,7 +26,14 @@ class PenjualanDetailController extends Controller
 
         // cek apakah ada transaksi yang sedang berjalan
         if ($id_penjualan = session('id')) {
-            return view('penjualan_detail.index', compact('produk', 'member', 'diskon', 'id_penjualan'));
+            $penjualan = Penjualan::find($id_penjualan);
+            // $kembali = $penjualan->diterima -= $penjualan->bayar;
+            $memberSelected = $penjualan->member ?? new Member();
+            // $member =  Penjualan::rightJoin('member', 'member.id', 'penjualan.id_member')
+            //     ->select('penjualan.id', 'member.*')
+            //     ->where('penjualan.id', $id_penjualan)->get();
+            // return $member;
+            return view('penjualan_detail.index', compact('produk', 'member', 'diskon', 'id_penjualan', 'memberSelected', 'penjualan'));
         } else {
             if (auth()->user()->level == 1) {
                 return redirect()->route('transaksi.baru');
