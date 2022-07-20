@@ -81,11 +81,22 @@
             if (! e.preventDefault()){
                 $.post($('#modal-form form').attr('action'), $('#modal-form form').serialize())
                     .done((response) => {
+                        Swal.fire({
+                        // position : 'top-end',
+                        icon: 'success',
+                        title: 'Produk Berhasil Disimpan',
+                        // text: 'Something went wrong!',
+                        // footer: '<a href="">Why do I have this issue?</a>'
+                    })
                         $('#modal-form').modal('hide');
                         table.ajax.reload();
                     })
                     .fail((errors) => {
-                        alert('Tidak dapat menyimpan data');
+                        Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Produk Sudah Ada !!!',
+                  })
                         return;
                     });
             }
