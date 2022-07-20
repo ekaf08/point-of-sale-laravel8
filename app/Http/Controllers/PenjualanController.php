@@ -134,7 +134,7 @@ class PenjualanController extends Controller
             $produk->stok -= $item->jumlah;
             $produk->update();
         }
-        return redirect()->route('penjualan.index');
+        return redirect()->route('penjualan.index')->with('success', 'Data Berhasil Disimpan');
     }
 
     /**
