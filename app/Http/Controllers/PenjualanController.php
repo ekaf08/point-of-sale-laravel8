@@ -6,6 +6,7 @@ use App\Models\Penjualan;
 use App\Models\PenjualanDetail;
 use Illuminate\Http\Request;
 use App\Models\Produk;
+use Illuminate\Support\Facades\DB;
 
 class PenjualanController extends Controller
 {
@@ -16,7 +17,70 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        //
+        return view('penjualan.index');
+    }
+
+    public function data()
+    {
+        // menggunakan eloquent
+        // $pembelian = Pembelian::orderBy('id', 'desc')->get();
+
+
+        // $penjualan = DB::table('penjualan')
+        //     ->join('member', 'member.id', '=', 'penjualan.id_member')
+        //     ->join('users', 'users.id', '=', 'penjualan.id_user')
+        //     ->select('penjualan.*', 'member.kode_member', 'penjualan.id_user', 'users.name')
+        //     ->orderBy('penjualan.id', 'desc')
+        //     ->get();
+
+        // $penjualan = Penjualan::leftJoin('member', 'member.id', 'penjualan.id_member', 'detail_penjualan', 'detail_penjualan.id_penjualan', 'penjualan.id')
+        //     ->select('penjualan.*', 'member.kode_member', 'penjualan.id_user')
+        //     ->orderBy('penjualan.id', 'desc')
+        //     ->get();
+
+        $penjualan = Penjualan::leftJoin('member', 'member.id', 'penjualan.id_member')
+            ->leftJoin('users', 'users.id', 'penjualan.id_user')
+            ->select('penjualan.*', 'member.kode_member', 'users.name')
+            ->orderBy('penjualan.id', 'desc')
+            ->get();
+
+        // return $penjualan;
+
+        return datatables()
+            ->of($penjualan)
+            ->addIndexColumn()
+            ->addColumn('created_at', function ($penjualan) {
+                return tanggal_indonesia($penjualan->created_at);
+            })
+            ->addColumn('kode_member', function ($penjualan) {
+                return '<span class="label label-success">' . $penjualan->kode_member ?? '' . '</span>';
+            })
+            ->addColumn('total_item', function ($penjualan) {
+                return ' <p class="text-right">' . format_uang($penjualan->total_item) . '</p>';
+            })
+            ->addColumn('total_harga', function ($penjualan) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($penjualan->total_harga) . '</p>';
+            })
+            ->editColumn('diskon', function ($penjualan) {
+                return ' <p class="text-right">' . ($penjualan->diskon) .  ' % </p>';
+            })
+            ->addColumn('bayar', function ($penjualan) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($penjualan->bayar) . '</p>';
+            })
+            ->addColumn('kasir', function ($penjualan) {
+                return $penjualan->name ?? '';
+            })
+
+            ->addColumn('aksi', function ($penjualan) {
+                return '
+                    <div class="">
+                        <button onclick="showDetail(`' . route('penjualan.show', $penjualan->id) . '`)" class="btn btn-xs btn-warning btn-flat"><i class="fa fa-eye"></i></button>
+                        <button onclick="deleteData(`' . route('penjualan.destroy', $penjualan->id) . '`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
+                    </div>
+                ';
+            })
+            ->rawColumns(['aksi', 'kode_member', 'kasir', 'total_harga', 'total_item', 'diskon', 'bayar'])
+            ->make(true);
     }
 
     /**
@@ -70,7 +134,7 @@ class PenjualanController extends Controller
             $produk->stok -= $item->jumlah;
             $produk->update();
         }
-        return redirect()->route('produk.index');
+        return redirect()->route('penjualan.index');
     }
 
     /**
@@ -81,7 +145,46 @@ class PenjualanController extends Controller
      */
     public function show($id)
     {
-        //
+        $detail = PenjualanDetail::leftJoin('produk', 'produk.id', 'detail_penjualan.id_produk')
+            ->select('detail_penjualan.*', 'produk.*')
+            ->where('detail_penjualan.id_penjualan', $id)
+            ->get();
+
+        // return $detail;
+
+        // menggunakan eloquent
+        // $detail = PembelianDetail::with('produk')
+        //     ->where('id_pembelian', $id)->get();
+
+        // $detail = PembelianDetail::where('id_pembelian', $id)->get();
+
+        // return $detail;
+
+        return datatables()
+            ->of($detail)
+            ->addIndexColumn()
+            // ->addColumn('created_at', function ($detail) {
+            //     return tanggal_indonesia($detail->created_at);
+            // })
+            ->addColumn('kode_produk', function ($detail) {
+                return '<span class="label label-success">' . $detail->kode_produk . '</span>';
+            })
+            ->addColumn('nama_produk', function ($detail) {
+                return $detail->nama_produk;
+            })
+            ->addColumn('harga_jual', function ($detail) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->harga_jual) . '</p>';
+            })
+            ->addColumn('jumlah', function ($detail) {
+                return ' <p class="text-right">' . format_uang($detail->jumlah) . '</p>';
+            })
+            ->addColumn('subtotal', function ($detail) {
+                return ' <p class="text-right">' . 'Rp. ' .  format_uang($detail->subtotal) . '</p>';
+            })
+            ->rawColumns(['kode_produk', 'harga_jual', 'jumlah', 'subtotal'])
+            ->make(true);
+
+        // return $detail;
     }
 
     /**

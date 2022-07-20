@@ -82,7 +82,7 @@
                                 <label for="diskon" class="col-lg-2 control-label">DISKON</label>
                                 <div class="col-lg-8">
                                     {{-- value diskon di laukan pengecekan apakah ada member yang terpilih atau ga ? kalau tidak ada maka akan di set 0 --}}
-                                    <input type="number" name="diskon" id="diskon" class="form-control" value="{{ ! empty($memberSelected) ? $diskon : 0 }}" readonly>
+                                    <input type="number" name="diskon" id="diskon" class="form-control" value="{{ ! empty($memberSelected->id) ? $diskon : 0 }}" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -94,7 +94,7 @@
                             <div class="form-group row">
                                 <label for="diterima" class="col-lg-2 control-label">DITERIMA</label>
                                 <div class="col-lg-8">
-                                    <input type="number" id="diterima" name="diterima" class="form-control" value="{{ ! empty($memberSelected) ? $penjualan->diterima : 0 }}">
+                                    <input type="number" id="diterima" name="diterima" class="form-control" value="{{ $penjualan->diterima ?? 0 }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div> 
                 </div>
             </div>
             <div class="box-footer">
@@ -148,7 +148,10 @@
         })
         .on('draw.dt', function(){
             loadForm($('#diskon').val()); 
-            
+            // triger untuk menghitung kembali (diterima-bayar)
+            setTimeout(() => {
+                $('#diterima').trigger('input');
+            }, 300);
         })
         ;
 
