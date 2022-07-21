@@ -91,7 +91,7 @@ class ProdukController extends Controller
             })
             ->addColumn('aksi', function ($produk) {
                 return '
-                <div class="">
+                <div class="btn-group">
                     <button type="button" onclick="editForm(`' . route('produk.update', $produk->id) . '`)" class="btn btn-info btn-xs btn-flat"><i class="fa fa-pencil" ></i> </button>
                     <button type="button" onclick="deleteData(`' . route('produk.destroy', $produk->id) . '`)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i> </button>
                 </div>

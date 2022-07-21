@@ -62,7 +62,7 @@
                     // position : 'top-end',
                     icon: 'success',
                     title: 'Berhasil',
-                    text: 'Kategori Berhasil Ditambahkan',
+                    text: 'Kategori Telah Ditambahkan',
                     // footer: '<a href="">Why do I have this issue?</a>'
                   })
                 $('#modal-form').modal('hide');

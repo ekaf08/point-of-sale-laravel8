@@ -67,7 +67,7 @@
                     // position : 'top-end',
                     icon: 'success',
                     title: 'Berhasil',
-                    text: 'Supplier Berhasil Ditambahkan',
+                    text: 'Supplier Telah Ditambahkan',
                     // footer: '<a href="">Why do I have this issue?</a>'
                   })
                 $('#modal-form').modal('hide');

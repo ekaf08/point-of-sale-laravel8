@@ -33,8 +33,8 @@
                                 <th class="text-center" width="8%">MERK</th>
                                 <th class="text-center" width="13%">HARGA BELI</th>
                                 <th class="text-center" width="13%">HARGA JUAL</th>
-                                <th class="text-center" width="5">DISKON</th>
-                                <th class="text-center" width="5%">STOK</th>
+                                <th class="text-center" width="3">DISKON</th>
+                                <th class="text-center" width="3%">STOK</th>
                                 <th class="text-center" width="8%"><i class="fa fa-cog"></i></th>
                             </thead>
                             <tbody style="font-weight: normal;">
@@ -86,7 +86,7 @@
                         // position : 'top-end',
                         icon: 'success',
                         title: 'Berhasil',
-                        text: 'Produk Berhasil Ditambahkan',
+                        text: 'Produk Telah Ditambahkan',
                         // footer: '<a href="">Why do I have this issue?</a>'
                     })
                         $('#modal-form').modal('hide');
