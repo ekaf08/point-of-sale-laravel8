@@ -246,7 +246,7 @@
 
     function tampilProduk() {
         $('#modal-produk').modal('show');
-        $('#modal-produk .modal-title').text('Daftar Member');
+        $('#modal-produk .modal-title').text('Pilih Produk');
     }
 
     function tampilMember() {

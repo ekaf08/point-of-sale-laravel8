@@ -7,6 +7,7 @@ use App\Models\PenjualanDetail;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use Illuminate\Support\Facades\DB;
+use App\Models\setting;
 
 class PenjualanController extends Controller
 {
@@ -134,7 +135,8 @@ class PenjualanController extends Controller
             $produk->stok -= $item->jumlah;
             $produk->update();
         }
-        return redirect()->route('penjualan.index')->with('success', 'Data Berhasil Disimpan');
+        // return redirect()->route('penjualan.index')->with('success', 'Data Berhasil Disimpan');
+        return redirect()->route('transaksi.selesai');
     }
 
     /**
@@ -217,6 +219,61 @@ class PenjualanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        $penjualan = Penjualan::find($id);
+
+        // hapus tabel detail_penjualan by id penjualan
+        $detail    = PenjualanDetail::where('id_penjualan', $penjualan->id)->get();
+
+        // return $detail;
+
+        // $detail    = penjualanDetail::leftJoin('penjualan', 'penjualan.id', 'detail_penjualan.id_penjualan')
+        //     ->select('detail_penjualan.*', 'penjualan.*')
+        //     ->where('detail_penjualan.id_penjualan', $id)
+        //     ->get();
+        foreach ($detail as $item) {
+            // mengurangi stok tabel produk by id penjualan
+            $produk = Produk::find($item->id_produk);
+            if ($produk) {
+                $produk->stok += $item->jumlah;
+                $produk->update();
+            }
+            $item->delete();
+        }
+        $penjualan->delete();
+        return response(null, 204);
+    }
+
+    public function selesai()
+    {
+        $setting = Setting::first();
+        return view('penjualan.selesai', compact('setting'));
+    }
+
+    public function notaKecil()
+    {
+        $setting = Setting::first();
+        $penjualan = Penjualan::find(session('id'));
+        // cek apakah ada penjualan aktif atau tidak
+        if (!$penjualan) {
+            // abort(404);
+            return redirect()->route('penjualan.index')->with('error', 'Tidak Ada Penjualan Aktif');
+        }
+
+        $detail = PenjualanDetail::join('produk', 'produk.id', 'detail_penjualan.id_produk')
+            ->select('detail_penjualan.*', 'produk.*')
+            ->where('detail_penjualan.id_penjualan', session('id'))
+            ->get();
+
+        //di bawah ini menggunakan eloquent
+        // $detail = PenjualanDetail::with('produk')
+        //     ->where('id_penjualan', session('id'))
+        // ->get();
+
+        return view('penjualan.nota_kecil', compact('setting', 'penjualan', 'detail'));
+    }
+
+    public function notaBesar()
     {
         //
     }

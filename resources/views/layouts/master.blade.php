@@ -32,6 +32,10 @@
   <link rel="stylesheet" href="{{ asset('AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ asset('aset/csscustom.css') }}">
+<!--sweet alert-->
+<script src="{{ asset('sweet-alert/sweetalert2-11.js') }}"></script>
+
+  
   {{-- <!--Font Popins-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
