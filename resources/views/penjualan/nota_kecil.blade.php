@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Nota Kecil</title>
 
+    {{-- @dd($_COOKIE['innerHeight']); --}}
     <?php
         $style = '
             <style>
@@ -31,15 +32,14 @@
                 @media print{
                     @page {
                         margin: 0;
-                        size: 75mm;
-                
+                        size: 75mm           
         ';
     ?>
     <?php
         $style .=
             !empty($_COOKIE['innerHeight'])
-                ? empty($_COOKIE['innerHeight']) .'mm'
-                : '';
+                ? $_COOKIE['innerHeight'] .'mm; }'
+                : '}';
     ?>
     <?php
         $style .= '
@@ -47,14 +47,14 @@
                             width: 70mm;
                         }
                         .btn-print {
-                            display:none;
+                            display: none;
                         }
                     }
-                }
             </style>
         ';
     ?>
 </head>
+{!! $style !!}
 <body>
     <button class="btn-print" style="position: absolute; right: 1rem; top: 1rem;" onclick="window.print()">Print</button>
     <div class="text-center">
@@ -87,7 +87,7 @@
 
     <table width="100%" style="border: 0;">
         <tr>
-            <td>Total Harga </td>
+            <td>Total Harga: </td>
             <td class="text-right">{{ format_uang($penjualan->total_harga) }}</td>
         </tr>
         <tr>
@@ -115,5 +115,16 @@
     <p class="text-center">======================================</p>
     <p class="text-center">-- Terimakasih --</p>
     
+    <script>
+        let body = document.body;
+        let html = document.documentElement;
+        let height = Math.max(
+            body.scrollHeight, body.offsetHeight,
+            html.clientHeight, html.scrollHeight, html.offsetHeight
+        );
+
+        document.cookie = "innerHeight=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "innerHeight="+ (height) * 0.264583;
+    </script>
 </body>
 </html>
