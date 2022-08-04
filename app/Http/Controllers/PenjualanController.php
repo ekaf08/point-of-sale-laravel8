@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Models\Produk;
 use Illuminate\Support\Facades\DB;
 use App\Models\setting;
+// use Barryvdh\DomPDF\PDF as PDF;
+use PDF;
 
 class PenjualanController extends Controller
 {
@@ -275,6 +277,21 @@ class PenjualanController extends Controller
 
     public function notaBesar()
     {
-        //
+        $setting = Setting::first();
+        $penjualan = Penjualan::find(session('id'));
+        // cek apakah ada penjualan aktif atau tidak
+        if (!$penjualan) {
+            // abort(404);
+            return redirect()->route('penjualan.index')->with('error', 'Tidak Ada Penjualan Aktif');
+        }
+
+        $detail = PenjualanDetail::join('produk', 'produk.id', 'detail_penjualan.id_produk')
+            ->select('detail_penjualan.*', 'produk.*')
+            ->where('detail_penjualan.id_penjualan', session('id'))
+            ->get();
+
+        $pdf = PDF::loadView('penjualan.nota_besar', compact('setting', 'penjualan', 'detail'));
+        $pdf->setPaper(0, 0, 609, 440, 'potrait');
+        return $pdf->stream('Penjualan-' . date('Y-m-d-his') . '.pdf');
     }
 }

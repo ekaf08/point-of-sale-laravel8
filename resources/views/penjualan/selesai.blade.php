@@ -30,7 +30,7 @@
                 @if ($setting->tipe_nota == 1)
                     <button class="btn btn-warning btn-flat" onclick="notaKecil('{{ route('transaksi.nota_kecil') }}', 'Nota Kecil')"><i class="fa fa-print"></i> Cetak Nota</button>                       
                 @else
-                    <button class="btn btn-warning btn-flat" onclick="notaBesar('{{ route('transaksi.nota_kecil') }}', 'Nota Besar'"><i class="fa fa-print"></i> Cetak Nota</button>
+                    <button class="btn btn-warning btn-flat" onclick="notaBesar('{{ route('transaksi.nota_besar') }}', 'Nota Besar'"><i class="fa fa-print"></i> Cetak Nota</button>
                 @endif
          
                 <a href="{{ route('transaksi.baru') }}" class="btn btn-primary btn-flat"><i class="fa fa-cart-arrow-down"></i> Transaksi Baru</a>
@@ -46,7 +46,7 @@
 <script>
     function notaKecil(url, title) {
         //720 = ukuran, 675 = width
-        popupCenter(url, title, 720, 675);
+        popupCenter(url, title, 625, 500);
     }
 
     function notaBesar(url, title) {
