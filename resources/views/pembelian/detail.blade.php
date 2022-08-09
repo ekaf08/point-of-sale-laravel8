@@ -1,6 +1,6 @@
   <!-- Modal -->
   <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-labelledby="modal-detail">
-    <div class="modal-dialog modal-lg" style="width: 80%" role="document">
+    <div class="modal-dialog"  role="document">
 
       <div class="modal-content">
         <div class="modal-header">

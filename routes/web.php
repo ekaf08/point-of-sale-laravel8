@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     ProdukController,
     KategoriController,
+    LaporanController,
     MemberController,
     PembelianController,
     PengeluaranController,
@@ -12,7 +13,7 @@ use App\Http\Controllers\{
     PenjualanController,
     PenjualanDetailController,
 };
-
+use Doctrine\DBAL\Schema\Index;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,4 +84,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/transaksi/loadform/{diskon}/{total}/{diterima}', [PenjualanDetailController::class, 'loadForm'])->name('transaksi.load_form');
     Route::resource('/transaksi', PenjualanDetailController::class)
         ->except('show',);
+
+    // ----------------Laporan pendapatan-------------------------------
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/data/{awal}/{akhir}', [LaporanController::class, 'data'])->name('laporan.data');
+    Route::get('/laporan/pdf/{awal}/{akhir}', [LaporanController::class, 'exportPDF'])->name('laporan.export_pdf');
 });
