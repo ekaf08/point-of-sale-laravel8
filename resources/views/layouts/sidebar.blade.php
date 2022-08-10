@@ -91,7 +91,7 @@
                 </li>
             <li class="header">PENGATURAN</li>
                 <li>
-                    <a href="#">
+                    <a href="{{ route('user.index') }}">
                         <i class="fa fa-user"></i> <span>User</span>
                     </a>
                 </li>
