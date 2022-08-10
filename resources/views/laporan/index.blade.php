@@ -18,15 +18,15 @@
     <div class="col-lg-12">
         <div class="box">
             <div class="box-header with-border">
-                <button class="btn btn-success btn-xs btn-flat" onclick="updatePeriode()"><i class="fa fa-stack-exchange"></i> Ubah Periode</button>
-                <a href="{{ route('laporan.export_pdf',[$tanggalAwal, $tanggalAkhir]) }}" class="btn btn-info btn-xs btn-flat" target="_blank" ><i class="fa fa-print"></i> Cetak PDF</a>
+                <button class="btn btn-primary btn-xs btn-flat" onclick="updatePeriode()"><i class="fa fa-stack-exchange"></i> Ubah Periode</button>
+                <a href="{{ route('laporan.export_pdf',[$tanggalAwal, $tanggalAkhir]) }}" class="btn btn-success btn-xs btn-flat" target="_blank" ><i class="fa fa-file-excel-o"></i> Cetak PDF</a>
             </div>
             <div class="box-body table-responsive">
                 <table class="table table-stiped table-bordered">
                     <thead class="header_table">
                         <th class="text-center" width="5%">NO</th>
                         <th class="text-center" width="15%">TANGGAL</th>
-                        <th class="text-center" width="45%">PENJUALAN</th>
+                        <th class="text-center" width="20%">PENJUALAN</th>
                         <th class="text-center" width="20%">PEMBELIAN</th>
                         <th class="text-center" width="20%">PENGELUARAN</th>
                         <th class="text-center" width="20%">PENDAPATAN</th>

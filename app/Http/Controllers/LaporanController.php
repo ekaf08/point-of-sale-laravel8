@@ -6,6 +6,7 @@ use App\Models\Pembelian;
 use App\Models\Pengeluaran;
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
+use PDF;
 
 class LaporanController extends Controller
 {
@@ -22,7 +23,7 @@ class LaporanController extends Controller
         return view('laporan.index', compact('tanggalAwal', 'tanggalAkhir'));
     }
 
-    public function data($awal, $akhir)
+    public function getData($awal, $akhir)
     {
         $no = 1;
         $data = array();
@@ -61,8 +62,25 @@ class LaporanController extends Controller
             'pendapatan' => format_uang($total_pendapatan),
         ];
 
+        return $data;
+    }
+
+    public function data($awal, $akhir)
+    {
+
+        $data = $this->getData($awal, $akhir);
+
         return datatables()
             ->of($data)
             ->make(true);
+    }
+
+    public function exportPDF($awal, $akhir)
+    {
+        $data = $this->getData($awal, $akhir);
+        $pdf = PDF::loadView('laporan.pdf', compact('awal', 'akhir', 'data'));
+        $pdf->setPaper('a4', 'potrait');
+
+        return $pdf->stream('Laporan-Pendapatan-' . date('Y-m-d-his') . '.pdf');
     }
 }
