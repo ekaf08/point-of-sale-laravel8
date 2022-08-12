@@ -1,6 +1,6 @@
   <!-- Modal -->
   <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form">
-    <div class="modal-dialog"  role="document">
+    <div class="modal-dialog modal-lg"  role="document">
            <form action="" method="POST" class="form-horizontal">
             @csrf
             @method('post')
@@ -11,27 +11,27 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <label for="nama"class="col-md-2 col-md-offset-1 control-label" >Nama</label>
+                        <label for="nama"class="col-md-3 col-md-offset-1 control-label" >Nama</label>
                         <div class="col-md-6">
                             <input type="text" name="nama" id="nama" onkeyup="user()" class="form-control" required autofocus><span class="help-block with-errors"></span>
                         </div>
                     </div> 
                     <div class="form-group row">
-                      <label for="email"class="col-md-2 col-md-offset-1 control-label" >E-mail</label>
+                      <label for="email"class="col-md-3 col-md-offset-1 control-label" >E-mail</label>
                       <div class="col-md-6">
-                          <input type="text" name="email" id="email" onkeyup="user()" class="form-control" required autofocus><span class="help-block with-errors"></span>
+                          <input type="text" name="email" id="email" onkeyup="user()" class="form-control" required ><span class="help-block with-errors"></span>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="password"class="col-md-2 col-md-offset-1 control-label" >Password</label>
+                      <label for="password"class="col-md-3 col-md-offset-1 control-label" >Password</label>
                       <div class="col-md-6">
-                          <input type="text" name="password" id="password" class="form-control" required autofocus><span class="help-block with-errors"></span>
+                          <input type="password" name="password" id="password" class="form-control" required ><span class="help-block with-errors"></span>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="password2"class="col-md-2 col-md-offset-1 control-label" >Konfirmasi Password</label>
+                      <label for="password_confirmation"class="col-md-3 col-md-offset-1 control-label" >Konfirmasi Password</label>
                       <div class="col-md-6">
-                          <input type="text" name="password2" id="password2" class="form-control" required autofocus><span class="help-block with-errors"></span>
+                          <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required data-match="#password"><span class="help-block with-errors"></span>
                       </div>
                     </div>
                 

@@ -22,7 +22,7 @@
                         <th class="text-center" width="5%">NO</th>
                         <th class="text-center" width="15%">NAMA</th>
                         <th class="text-center" width="45%">E-MAIL</th>
-                        <th class="text-center" width="15%"><i class="fa fa-cog"></i></th>
+                        <th class="text-center" width="5%"><i class="fa fa-cog"></i></th>
                     </thead>
                     <tbody style="font-weight: normal;">
 
@@ -91,6 +91,8 @@
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('post');
         $('#modal-form [name=name]').focus();
+
+        $('#password, #password_confirmation').attr('required', true);
     }
 
     function editForm(url) {
@@ -102,12 +104,13 @@
         $('#modal-form [name=_method]').val('put');
         $('#modal-form [name=deskripsi]').focus();
 
+        $('#password, #password_confirmation').attr('required', false);
+
         $.get(url)
             .done((response) => {
                 $('#modal-form [name=nama]').val(response.name);
                 $('#modal-form [name=email]').val(response.email);
                 $('#modal-form [name=password]').val(response.password);
-                $('#modal-form [name=password2]').val(response.password);
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

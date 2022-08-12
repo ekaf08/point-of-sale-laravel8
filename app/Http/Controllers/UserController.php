@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -19,7 +20,9 @@ class UserController extends Controller
 
     public function data()
     {
-        $user = User::orderBy('id', 'desc')->get();
+        $user = User::isNotAdmin()->orderBy('id', 'desc')->get();
+
+        // return $user;
 
         return datatables()
             ->of($user)
@@ -54,7 +57,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->level = 2;
+        $user->foto = '/img/avatar3.png';
+        $user->save();
+
+        return response()->json('Data Berhasil Disimpan', 200);
     }
 
     /**
@@ -65,7 +76,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::find($id);
+        return response()->json($user);
     }
 
     /**
@@ -88,7 +100,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->nama;
+        $user->email = $request->email;
+        if ($request->has('password') && $request->password != "") {
+            $user->password = Hash::make($request->password);
+        }
+        $user->update();
+
+        return response()->json('Data berhasil disimpan', 200);
     }
 
     /**
@@ -99,6 +119,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return response(null, 204);
     }
 }
