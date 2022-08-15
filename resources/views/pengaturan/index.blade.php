@@ -124,6 +124,9 @@
                     showData();
                     $('.alert').fadeIn();
                     $('[name=nama_toko]').focus();
+                    setTimeout(() => {
+                        $('.alert').fadeOut();
+                    }, 2000);
                     // $('#modal-form [name=nama_kategori]').focus();
                 })
                 .fail(errors => {
@@ -146,6 +149,7 @@
             // untuk preview gambar
             $('.tampil-logo').html(`<img src="{{ url('/') }}${response.path_logo}" width="200">`);
             $('.tampil-kartu-member').html(`<img src="{{ url('/') }}${response.path_kartu_member}" width="300">`)
+            $('[rel=icon]').attr('href', `{{ url('/') }}/${response.path_logo}`);
         })
         .fail(errors => {
             alert('Tidak dapat menyimpan data')
