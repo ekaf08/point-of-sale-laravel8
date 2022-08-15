@@ -44,7 +44,7 @@
                 <div class="form-group row">
                     <label for="path_logo" class="col-lg-2 col-lg-offset-1 control-label">Logo Toko</label>
                     <div class="col-lg-2">
-                        <input type="file" class="form-control" name="path_logo" id="path_logo" >
+                        <input type="file" class="form-control" name="path_logo" id="path_logo" onchange="preview('.tampil-logo', this.files[0])">
                         <span class="help-block with-errors"></span>
                         <br>
                         <div class="tampil-logo">
@@ -55,10 +55,10 @@
                 <div class="form-group row">
                     <label for="path_kartu_member" class="col-lg-2 col-lg-offset-1 control-label">Kartu Member</label>
                     <div class="col-lg-2">
-                        <input type="file" class="form-control" name="path_kartu_member" id="path_kartu_member" >
+                        <input type="file" class="form-control" name="path_kartu_member" id="path_kartu_member" onchange="preview('.tampil-kartu-member', this.files[0], 300)">
                         <span class="help-block with-errors"></span>
                         <br>
-                        <div class="kartu-member">
+                        <div class="tampil-kartu-member">
 
                         </div>
                     </div>
@@ -108,7 +108,9 @@
 
 <script>
     $(function(){
-        $('.form-setting').validator().on('submit', function (){
+        showData();
+
+        $('.form-setting').validator().on('submit', function (e){
             if (! e.preventDefault()) {
                 $.ajax({
                     url: $('.form-setting').attr('action'),
@@ -120,7 +122,9 @@
                 })
                 .done(response => {
                     showData();
-                    $('.alert').fadeOut();
+                    $('.alert').fadeIn();
+                    $('[name=nama_toko]').focus();
+                    // $('#modal-form [name=nama_kategori]').focus();
                 })
                 .fail(errors => {
                     alert('tidak dapat menyimpan data');
@@ -129,6 +133,25 @@
             }
         });
     });
+
+    function showData() {
+        $.get('{{ route('setting.show') }}')
+        .done(response=> {
+            // console.log(response);
+            $('[name=nama_toko]').val(response.nama_perusahaan);
+            $('[name=telepon]').val(response.telepon);
+            $('[name=alamat]').val(response.alamat);
+            $('[name=diskon]').val(response.diskon);
+            $('[name=tipe_nota]').val(response.tipe_nota);
+            // untuk preview gambar
+            $('.tampil-logo').html(`<img src="{{ url('/') }}${response.path_logo}" width="200">`);
+            $('.tampil-kartu-member').html(`<img src="{{ url('/') }}${response.path_kartu_member}" width="300">`)
+        })
+        .fail(errors => {
+            alert('Tidak dapat menyimpan data')
+            return
+        })
+    }
 </script>
-    
+
 @endpush

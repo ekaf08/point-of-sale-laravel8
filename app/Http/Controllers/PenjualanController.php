@@ -7,7 +7,7 @@ use App\Models\PenjualanDetail;
 use Illuminate\Http\Request;
 use App\Models\Produk;
 use Illuminate\Support\Facades\DB;
-use App\Models\setting;
+use App\Models\Setting;
 // use Barryvdh\DomPDF\PDF as PDF;
 use PDF;
 
