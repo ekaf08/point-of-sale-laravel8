@@ -12,6 +12,7 @@ use App\Http\Controllers\{
     PembelianDetailController,
     PenjualanController,
     PenjualanDetailController,
+    SettingController,
     UserController,
 };
 use Doctrine\DBAL\Schema\Index;
@@ -94,4 +95,9 @@ Route::group(['middleware' => 'auth'], function () {
     // ----------------User-------------------------------
     Route::get('/user/data', [UserController::class, 'data'])->name('user.data');
     Route::resource('/user', UserController::class);
+
+    // ----------------Setting-------------------------------
+    Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
+    Route::get('/setting/first', [SettingController::class, 'show'])->name('setting.show');
+    Route::post('/setting', [SettingController::class, 'update'])->name('setting.update');
 });
