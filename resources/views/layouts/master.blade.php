@@ -23,6 +23,9 @@
   <link rel="stylesheet" href="{{ asset('AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ asset('aset/csscustom.css') }}">
+  <!--Filepond-->
+  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+  <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
 <!--sweet alert-->
 <script src="{{ asset('sweet-alert/sweetalert2-11.js') }}"></script>
 
