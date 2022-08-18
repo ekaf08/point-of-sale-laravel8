@@ -6,7 +6,7 @@
     <div class="login-box-body" style="border-radius: 10%;">
         <div class="login-logo">
             <a href="{{ url('/') }}">
-                <img src="{{ asset('img/company-logo.png') }}" alt="company-logo" width="180">
+                <img src="{{ url($setting->path_logo) }}" alt="company-logo" width="180">
             </a>
           </div>
           <!-- /.login-logo -->

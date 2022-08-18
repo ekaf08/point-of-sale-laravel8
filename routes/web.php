@@ -101,6 +101,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/setting/first', [SettingController::class, 'show'])->name('setting.show');
     Route::post('/setting', [SettingController::class, 'update'])->name('setting.update');
 
+    // ----------------user profil-------------------------------
+    Route::get('/profil', [UserController::class, 'profil'])->name('user.profil');
+    Route::post('/profil', [UserController::class, 'updateProfil'])->name('user.update_profil');
+
     // File Upload
     Route::post('/upload', [FileUploadController::class, 'store'])->name('upload');
     Route::delete('/revert', [FileUploadController::class, 'delete'])->name('revert');

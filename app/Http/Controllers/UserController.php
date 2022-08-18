@@ -124,4 +124,42 @@ class UserController extends Controller
 
         return response(null, 204);
     }
+
+    public function profil()
+    {
+        $profil = auth()->user();
+        // dd($profil);
+        return view('user.profil', compact('profil'));
+    }
+
+    public function updateProfil(Request $request)
+    {
+        $user = auth()->user();
+        // cek password lama dengan yang ada di database
+        if ($request->has('password') && $request->password != "") {
+            if (Hash::check($request->passwordLama, $user->password)) {
+                // cek password baru dengan password konfirmation
+                if ($request->password == $request->password_confirmation) {
+                    $user->password = bcrypt($request->password);
+                } else {
+                    return response()->json('Konfirmasi password tidak sesuai', 422);
+                }
+            } else {
+                return response()->json('Password lama tidak sesuai', 422);
+                // return back()->with('error', 'Password lama tidak sesuai');
+            }
+        }
+
+        $user->name = $request->name;
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $nama = 'profil-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('img'), $nama);
+
+            $user->foto = "/img/$nama";
+        }
+        $user->update();
+
+        return response()->json($user, 200);
+    }
 }
