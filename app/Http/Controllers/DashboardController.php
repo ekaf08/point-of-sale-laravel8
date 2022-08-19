@@ -17,8 +17,11 @@ class DashboardController extends Controller
         $produk = Produk::count();
         $supplier = Supplier::count();
 
+        $tanggal_awal = date('Y-m-01');
+        $tanggal_akhir = date('Y-m-d');
+
         if (auth()->user()->level == 1) {
-            return view('admin.dashboard', compact('kategori', 'supplier', 'member', 'produk'));
+            return view('admin.dashboard', compact('kategori', 'supplier', 'member', 'produk', 'tanggal_awal', 'tanggal_akhir'));
         } else {
             return view('kasir.dashboard');
         }
