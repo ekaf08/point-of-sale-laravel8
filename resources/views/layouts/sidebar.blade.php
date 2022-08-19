@@ -40,12 +40,7 @@
                 </li>
                 <li>
                     <a href="{{ route('produk.index') }}">
-                        <i class="fa fa-product-hunt"></i> <span>Produk</span>
-                    </a>
-                </li>
-                <li>
-                        <a href="{{ route('member.index') }}">
-                        <i class="fa fa-id-card"></i> <span>Member</span>
+                        <i class="fa fa-cubes"></i> <span>Produk</span>
                     </a>
                 </li>
                 <li>
@@ -53,6 +48,12 @@
                         <i class="fa fa-truck"></i> <span>Suplier</span>
                     </a>
                 </li>
+                <li>
+                        <a href="{{ route('member.index') }}">
+                        <i class="fa fa-id-card"></i> <span>Member</span>
+                    </a>
+                </li>
+                
             <li class="header">TRANSAKSI</li>
                 <li>
                     <a href="{{ route('pengeluaran.index') }}">
