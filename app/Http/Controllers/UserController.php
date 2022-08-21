@@ -104,7 +104,7 @@ class UserController extends Controller
         $user->name = $request->nama;
         $user->email = $request->email;
         if ($request->has('password') && $request->password != "") {
-            $user->password = Hash::make($request->password);
+            $user->password = bcrypt($request->password);
         }
         $user->update();
 

@@ -53,7 +53,7 @@ class PenjualanController extends Controller
             ->of($penjualan)
             ->addIndexColumn()
             ->addColumn('created_at', function ($penjualan) {
-                return tanggal_indonesia($penjualan->created_at);
+                return tanggal_indonesia($penjualan->created_at, false);
             })
             ->addColumn('kode_member', function ($penjualan) {
                 return '<span class="label label-success">' . $penjualan->kode_member ?? '' . '</span>';
