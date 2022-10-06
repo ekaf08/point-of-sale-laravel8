@@ -40,14 +40,18 @@
                     <div class="form-group row">
                         <label for="harga_beli"class="col-md-2 col-md-offset-1 control-label" >Harga Beli</label>
                         <div class="col-md-6">
-                            <input type="text" name="harga_beli" id="harga_beli" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control" required ><span class="help-block with-errors"></span>
+                            <input type="text" name="harga_beli" id="harga_beli" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control"
+                            data-inputmask="'alias': 'numeric','prefix': 'Rp ','digits': 2,'groupSeparator': ',','removeMaskOnSubmit': true,'autoUnmask':true"
+                             required ><span class="help-block with-errors"></span>
                         </div>
                     </div> 
 
                     <div class="form-group row">
                         <label for="harga_jual"class="col-md-2 col-md-offset-1 control-label" >Harga Jual</label>
                         <div class="col-md-6">
-                            <input type="text" name="harga_jual" id="harga_jual" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control" required ><span class="help-block with-errors"></span>
+                            <input type="text" name="harga_jual" id="harga_jual" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control"
+                            data-inputmask="'alias': 'numeric','prefix': 'Rp ','digits': 2,'groupSeparator': ',','removeMaskOnSubmit': true,'autoUnmask':true"
+                             required><span class="help-block with-errors"></span>
                         </div>
                     </div> 
 
@@ -61,7 +65,9 @@
                     <div class="form-group row">
                         <label for="stok"class="col-md-2 col-md-offset-1 control-label" >Stok</label>
                         <div class="col-md-6">
-                            <input type="text" name="stok" id="stok" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control" required ><span class="help-block with-errors"></span>
+                            <input type="text" name="stok" id="stok" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" class="form-control"
+                            data-inputmask="'alias': 'numeric','digits': 2,'groupSeparator': ',','removeMaskOnSubmit': true,'autoUnmask':true"
+                            required ><span class="help-block with-errors"></span>
                             {{-- <input type="text" name="kode_produk" id="kode_produk" class="form-control" required hidden><span class="help-block with-errors"></span> --}}
                         </div>
                     </div> 

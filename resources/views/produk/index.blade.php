@@ -52,6 +52,14 @@
 
 
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#harga_jual').inputmask();
+        $('#harga_beli').inputmask();
+        $('#stok').inputmask();
+    })
+</script>
 <script>
     let table;
 
